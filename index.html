@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crown Inn Hotel - Complete Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .content-section {
+            min-height: 500px;
+        }
+        .room-card {
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .room-card:hover {
+            transform: translateY(-5px);
+        }
+        .guest-card {
+            transition: all 0.3s ease;
+        }
+        .guest-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .status-vacant {
+            border-left: 4px solid #28a745;
+        }
+        .status-occupied {
+            border-left: 4px solid #dc3545;
+        }
+        .status-maintenance {
+            border-left: 4px solid #ffc107;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .card-header {
+            font-weight: 500;
+        }
+        .badge {
+            font-size: 0.75em;
+        }
+        .alert {
+            border: none;
+            border-radius: 8px;
+        }
+        .btn {
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .table {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .form-control, .form-select {
+            border-radius: 6px;
+        }
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            border-bottom: 1px solid #e9ecef;
+            border-radius: 12px 12px 0 0;
+        }
+        .modal-footer {
+            border-top: 1px solid #e9ecef;
+        }
+        .reset-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(220,53,69,0.3);
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .metric-card.success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        .metric-card.danger {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+        }
+        .metric-card.warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .metric-card.info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .compliance-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .vip-customer {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border: 2px solid #e17055;
+        }
+        .primary-guest {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 4px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="javascript:void(0)" onclick="showSection('dashboard')">
+                <i class="fas fa-hotel me-2"></i>Crown Inn Hotel
+                <small class="d-block" style="font-size: 0.6rem; opacity: 0.8;">Complete Management System</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)" onclick="showSection('dashboard')">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-users me-1"></i>Customers
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('add-customer')">
+                                <i class="fas fa-user-plus me-2"></i>Add Customer
+                            </a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('search-customers')">
+                                <i class="fas fa-search me-2"></i>Search Customers
+                            </a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('customer-list')">
+                                <i class="fas fa-list me-2"></i>Customer List
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bed me-1"></i>Rooms
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('room-status')">
+                                <i class="fas fa-door-open me-2"></i>Room Status
+                            </a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('room-management')">
+                                <i class="fas fa-cogs me-2"></i>Room Management
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-calendar-check me-1"></i>Bookings
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('new-booking')">
+                                <i class="fas fa-plus me-2"></i>New Booking
+                            </a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('quick-booking')">
+                                <i class="fas fa-bolt me-2"></i>Quick Booking
+                            </a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('all-bookings')">
+                                <i class="fas fa-list me-2"></i>All Bookings
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('checkout-section')">
+                                <i class="fas fa-sign-out-alt me-2"></i>Customer Checkout
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-credit-card me-1"></i>Payments
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('record-payment')">
+                                <i class="fas fa-plus me-2"></i>Record Payment
+                            </a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('payment-history')">
+                                <i class="fas fa-history me-2"></i>Payment History
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-chart-bar me-1"></i>Reports
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('revenue-reports')">
+                                <i class="fas fa-rupee-sign me-2"></i>Revenue Reports
+                            </a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="showSection('booking-history')">
+                                <i class="fas fa-clock me-2"></i>Booking History
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <span class="navbar-text">
+                            <i class="fas fa-calendar-alt me-1"></i>
+                            <span id="current-date-time"></span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="content-section container-fluid mt-3">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h2>
+                        <p class="text-muted">Welcome to Crown Inn Hotel Management System</p>
+                    </div>
+                    <div class="compliance-badge">
+                        <i class="fas fa-shield-alt me-1"></i>Government Compliant
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Metrics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-2">
+                <div class="metric-card success text-center">
+                    <i class="fas fa-door-open fa-2x mb-2"></i>
+                    <h4 id="vacant-rooms">0</h4>
+                    <small>Vacant Rooms</small>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="metric-card danger text-center">
+                    <i class="fas fa-door-closed fa-2x mb-2"></i>
+                    <h4 id="occupied-rooms">0</h4>
+                    <small>Occupied Rooms</small>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="metric-card info text-center">
+                    <i class="fas fa-rupee-sign fa-2x mb-2"></i>
+                    <h4>₹<span id="total-revenue">0</span></h4>
+                    <small>Total Revenue</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card text-center">
+                    <i class="fas fa-sign-in-alt fa-2x mb-2"></i>
+                    <h4 id="checkins-today">0</h4>
+                    <small>Check-ins Today</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card warning text-center">
+                    <i class="fas fa-sign-out-alt fa-2x mb-2"></i>
+                    <h4 id="checkouts-today">0</h4>
+                    <small>Check-outs Today</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Metrics -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                        <h5 id="total-customers">0</h5>
+                        <small>Total Customers</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-friends fa-2x text-success mb-2"></i>
+                        <h5 id="total-guests">0</h5>
+                        <small>Total Guests</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <i class="fas fa-calendar-check fa-2x text-info mb-2"></i>
+                        <h5 id="total-bookings">0</h5>
+                        <small>Total Bookings</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <i class="fas fa-shield-alt fa-2x text-warning mb-2"></i>
+                        <h5 id="verified-guests">0</h5>
+                        <small>ID Verified Guests</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="fas fa-clock me-2"></i>Recent Bookings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="recent-bookings">
+                            <div class="text-center text-muted">
+                                <i class="fas fa-calendar-plus fa-3x mb-3"></i>
+                                <p>No recent bookings</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5><i class="fas fa-bed me-2"></i>Room Status Overview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="room-overview">
+                            <div class="text-center text-muted">
+                                <i class="fas fa-home fa-3x mb-3"></i>
+                                <p>Loading room data...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Customer Section -->
+    <div id="add-customer" class="content-section container-fluid mt-3" style="display: none;">
+        <!-- Enhanced customer form will be loaded here dynamically -->
+    </div>
+
+    <!-- Search Customers Section -->
+    <div id="search-customers" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h4><i class="fas fa-search me-2"></i>Search Customers</h4>
+                        <p class="mb-0">Search by name, phone, email, Aadhaar, address, or occupation</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="search-input" 
+                                       placeholder="Search by name, phone, email, Aadhaar, city, PIN code...">
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary w-100" onclick="searchCustomers()">
+                                    <i class="fas fa-search me-1"></i>Search Customers
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <select class="form-select" id="customer-type-filter">
+                                    <option value="">All Customer Types</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="VIP">VIP</option>
+                                    <option value="Corporate">Corporate</option>
+                                    <option value="Group">Group</option>
+                                    <option value="Wedding">Wedding</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="city-filter">
+                                    <option value="">All Cities</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="state-filter">
+                                    <option value="">All States</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-secondary w-100" onclick="clearSearchFilters()">
+                                    <i class="fas fa-times me-1"></i>Clear Filters
+                                </button>
+                            </div>
+                        </div>
+                        <div id="search-results">
+                            <div class="text-center text-muted">
+                                <i class="fas fa-user-friends fa-3x mb-3"></i>
+                                <p>Enter search terms to find customers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer List Section -->
+    <div id="customer-list" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4><i class="fas fa-users me-2"></i>Customer List</h4>
+                            <p class="mb-0">Complete customer database with government compliance</p>
+                        </div>
+                        <button class="btn btn-success" onclick="showSection('add-customer')">
+                            <i class="fas fa-plus me-1"></i>Add New Customer
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-outline-primary" onclick="filterCustomers('all')">
+                                        All Customers
+                                    </button>
+                                    <button type="button" class="btn btn-outline-warning" onclick="filterCustomers('vip')">
+                                        VIP Customers
+                                    </button>
+                                    <button type="button" class="btn btn-outline-info" onclick="filterCustomers('corporate')">
+                                        Corporate
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success" onclick="filterCustomers('verified')">
+                                        ID Verified
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-outline-secondary" onclick="exportCustomerList()">
+                                    <i class="fas fa-download me-1"></i>Export List
+                                </button>
+                            </div>
+                        </div>
+                        <div id="customer-list-content">
+                            <div class="text-center">
+                                <div class="loading-spinner me-2"></div>
+                                Loading customer data...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Status Section -->
+    <div id="room-status" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4><i class="fas fa-bed me-2"></i>Room Status</h4>
+                        <div class="d-flex gap-3 mt-2">
+                            <span><i class="fas fa-square text-success me-1"></i>Vacant</span>
+                            <span><i class="fas fa-square text-danger me-1"></i>Occupied</span>
+                            <span><i class="fas fa-square text-warning me-1"></i>Under Maintenance</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="room-status-grid">
+                            <div class="text-center">
+                                <div class="loading-spinner me-2"></div>
+                                Loading rooms...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Management Section -->
+    <div id="room-management" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h4><i class="fas fa-cogs me-2"></i>Room Management</h4>
+                        <p class="mb-0">Manage all hotel rooms, prices, and configurations</p>
+                    </div>
+                    <div class="card-body">
+                        <!-- Room Management Tools -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h5>Total Rooms</h5>
+                                        <h3 id="total-rooms-count">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body text-center">
+                                        <h5>Available</h5>
+                                        <h3 id="available-rooms-count">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-danger text-white">
+                                    <div class="card-body text-center">
+                                        <h5>Occupied</h5>
+                                        <h3 id="occupied-rooms-count">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-warning text-white">
+                                    <div class="card-body text-center">
+                                        <h5>Maintenance</h5>
+                                        <h3 id="maintenance-rooms-count">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-primary" onclick="showAllRooms()">
+                                        <i class="fas fa-list me-1"></i>All Rooms
+                                    </button>
+                                    <button type="button" class="btn btn-success" onclick="filterRooms('Vacant')">
+                                        <i class="fas fa-door-open me-1"></i>Vacant Only
+                                    </button>
+                                    <button type="button" class="btn btn-danger" onclick="filterRooms('Occupied')">
+                                        <i class="fas fa-door-closed me-1"></i>Occupied Only
+                                    </button>
+                                    <button type="button" class="btn btn-warning" onclick="filterRooms('Under Maintenance')">
+                                        <i class="fas fa-tools me-1"></i>Maintenance Only
+                                    </button>
+                                    <button type="button" class="btn btn-info" onclick="bulkStatusChange()">
+                                        <i class="fas fa-edit me-1"></i>Bulk Status Change
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Room Grid -->
+                        <div id="room-management-grid">
+                            <div class="text-center">
+                                <div class="loading-spinner me-2"></div>
+                                Loading rooms...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Booking Section -->
+    <div id="new-booking" class="content-section container-fluid mt-3" style="display: none;">
+        <!-- Enhanced booking form will be loaded here dynamically -->
+    </div>
+
+    <!-- Quick Booking Section -->
+    <div id="quick-booking" class="content-section container-fluid mt-3" style="display: none;">
+        <!-- Enhanced quick booking form will be loaded here dynamically -->
+    </div>
+
+    <!-- All Bookings Section -->
+    <div id="all-bookings" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h4><i class="fas fa-list me-2"></i>All Bookings</h4>
+                        <p class="mb-0">Complete booking history with guest details</p>
+                    </div>
+                    <div class="card-body">
+                        <div id="all-bookings-content">
+                            <div class="text-center">
+                                <div class="loading-spinner me-2"></div>
+                                Loading booking data...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Section -->
+    <div id="checkout-section" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h4><i class="fas fa-sign-out-alt me-2"></i>Customer Checkout</h4>
+                        <p class="mb-0">Process customer checkout with final billing</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Current Occupied Rooms</h5>
+                                <div id="occupied-rooms-list">
+                                    <div class="text-center">
+                                        <div class="loading-spinner me-2"></div>
+                                        Loading occupied rooms...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="checkout-details" style="display: none;">
+                                    <h5>Checkout Details</h5>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="checkout-info"></div>
+                                            <button class="btn btn-danger mt-3" onclick="processCheckout()">
+                                                <i class="fas fa-sign-out-alt me-1"></i>Process Checkout
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Record Payment Section -->
+    <div id="record-payment" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4><i class="fas fa-credit-card me-2"></i>Record Payment</h4>
+                        <p class="mb-0">Record customer payments for bookings</p>
+                    </div>
+                    <div class="card-body">
+                        <form id="payment-form" onsubmit="event.preventDefault(); recordPayment();">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Select Booking *</label>
+                                    <select class="form-select" id="payment-booking" onchange="selectBookingForPayment()" required>
+                                        <option value="">Choose Booking</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Payment Amount *</label>
+                                    <input type="number" class="form-control" id="payment-amount" min="1" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Payment Method *</label>
+                                    <select class="form-select" id="payment-type" required>
+                                        <option value="">Select Method</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Card">Debit/Credit Card</option>
+                                        <option value="UPI">UPI</option>
+                                        <option value="Online">Online Transfer</option>
+                                        <option value="Cheque">Cheque</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Transaction Reference</label>
+                                    <input type="text" class="form-control" id="payment-reference" 
+                                           placeholder="UPI/Card/Transaction ID">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <div class="card bg-light">
+                                        <div class="card-body">
+                                            <h6>Payment Details</h6>
+                                            <div id="payment-details">Select a booking to see payment details</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <i class="fas fa-save me-1"></i>Record Payment
+                                    </button>
+                                    <button type="reset" class="btn btn-secondary btn-lg ms-2">
+                                        <i class="fas fa-undo me-1"></i>Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment History Section -->
+    <div id="payment-history" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h4><i class="fas fa-history me-2"></i>Payment History</h4>
+                        <p class="mb-0">Complete payment records and transaction history</p>
+                    </div>
+                    <div class="card-body">
+                        <div id="payment-history-content">
+                            <div class="text-center">
+                                <div class="loading-spinner me-2"></div>
+                                Loading payment history...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue Reports Section -->
+    <div id="revenue-reports" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4><i class="fas fa-chart-line me-2"></i>Revenue Reports</h4>
+                        <p class="mb-0">Financial analysis and revenue tracking</p>
+                    </div>
+                    <div class="card-body">
+                        <div id="revenue-reports-content">
+                            <div class="text-center">
+                                <div class="loading-spinner me-2"></div>
+                                Generating revenue reports...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking History Section -->
+    <div id="booking-history" class="content-section container-fluid mt-3" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h4><i class="fas fa-history me-2"></i>Booking History</h4>
+                        <p class="mb-0">Historical booking records with guest information</p>
+                    </div>
+                    <div class="card-body">
+                        <div id="booking-history-content">
+                            <div class="text-center">
+                                <div class="loading-spinner me-2"></div>
+                                Loading booking history...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Data Button -->
+    <button class="btn btn-danger reset-btn" onclick="resetAllData()" title="Reset All Data">
+        <i class="fas fa-database me-1"></i>Reset Data
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Application JavaScript -->
+    <script src="app.js"></script>
+
+    <script>
+        // Initialize date time display
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('current-date-time').textContent = now.toLocaleDateString('en-IN', options);
+        }
+        
+        // Update time every minute
+        setInterval(updateDateTime, 60000);
+        updateDateTime();
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🏨 Crown Inn Hotel Management System Loading...');
+            
+            // Show welcome message
+            setTimeout(() => {
+                if (typeof showAlert === 'function') {
+                    showAlert('🏨 Welcome to Crown Inn Hotel Management System!\nComplete solution with guest details and government compliance.', 'info');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

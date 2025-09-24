@@ -1,7 +1,5 @@
 // ========================================
 // CROWN INN HOTEL - COMPLETE MANAGEMENT SYSTEM
-// FULLY FIXED VERSION - NO ERRORS
-// Version: 5.0 - All Bugs Fixed
 // ========================================
 
 // ==================== GLOBAL VARIABLES ====================
@@ -17,7 +15,7 @@ let nextBookingId = 1;
 let nextPaymentId = 1;
 
 // ==================== SYSTEM INITIALIZATION ====================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     console.log('🏨 Crown Inn Hotel Management System - Version 5.0 FULLY FIXED');
     initializeSystem();
 });
@@ -28,7 +26,7 @@ function initializeSystem() {
     initializeSampleCustomers();
     updateDashboard();
     showSection('dashboard');
-    
+
     setTimeout(() => {
         showAlert('🏨 Crown Inn Hotel Management System LOADED!');
     }, 1500);
@@ -37,70 +35,9 @@ function initializeSystem() {
 function initializeSampleCustomers() {
     if (customers.length === 0) {
         console.log('🔄 Adding sample customers...');
-        
-        const sampleCustomers = [
-            {
-                id: nextCustomerId++,
-                name: 'Rajesh Kumar',
-                phone: '+91 9876543210',
-                whatsapp: '+91 9876543210',
-                email: 'rajesh.kumar@example.com',
-                id_type: 'aadhaar',
-                aadhaar: '123456789012',
-                address: '123 Main Street, Mumbai',
-                city: 'Mumbai',
-                state: 'Maharashtra',
-                pincode: '400001',
-                customer_type: 'Regular',
-                whatsapp_marketing: true,
-                birthday_offers: true,
-                dob: '1985-03-15',
-                created_at: new Date().toISOString(),
-                id_verified: true,
-                government_compliance: true
-            },
-            {
-                id: nextCustomerId++,
-                name: 'Priya Sharma',
-                phone: '+91 9876543211',
-                whatsapp: '+91 9876543211',
-                email: 'priya.sharma@example.com',
-                id_type: 'pan',
-                aadhaar: 'ABCDE1234F',
-                address: '456 Park Road, Delhi',
-                city: 'Delhi',
-                state: 'Delhi',
-                pincode: '110001',
-                customer_type: 'VIP',
-                whatsapp_marketing: true,
-                birthday_offers: true,
-                dob: '1990-07-22',
-                created_at: new Date().toISOString(),
-                id_verified: true,
-                government_compliance: true
-            },
-            {
-                id: nextCustomerId++,
-                name: 'Amit Patel',
-                phone: '+91 9876543212',
-                whatsapp: '+91 9876543212',
-                email: 'amit.patel@company.com',
-                id_type: 'passport',
-                aadhaar: 'A1234567',
-                address: '789 Business Center, Ahmedabad',
-                city: 'Ahmedabad',
-                state: 'Gujarat',
-                pincode: '380001',
-                customer_type: 'Corporate',
-                whatsapp_marketing: true,
-                birthday_offers: false,
-                dob: '1988-12-10',
-                created_at: new Date().toISOString(),
-                id_verified: true,
-                government_compliance: true
-            }
-        ];
-        
+
+        const sampleCustomers = [];
+
         customers = sampleCustomers;
         saveToLocalStorage();
         console.log('✅ Added 3 sample customers');
@@ -143,7 +80,7 @@ function loadFromLocalStorage() {
             nextRoomId = parsed.nextRoomId || 1;
             nextBookingId = parsed.nextBookingId || 1;
             nextPaymentId = parsed.nextPaymentId || 1;
-            
+
             console.log('✅ Data loaded from localStorage');
             console.log(`📊 Stats: ${customers.length} customers, ${rooms.length} rooms, ${bookings.length} bookings, ${payments.length} payments`);
         } else {
@@ -168,7 +105,7 @@ function resetAllData() {
 function initializeRooms() {
     if (rooms.length === 0) {
         console.log('🏗️ Initializing rooms system...');
-        
+
         // Floor 1: Single Rooms (101-108)
         for (let i = 1; i <= 8; i++) {
             rooms.push({
@@ -182,7 +119,7 @@ function initializeRooms() {
                 amenities: ['AC', 'WiFi', 'TV', 'Bathroom']
             });
         }
-        
+
         // Floor 2: Double Rooms (201-208)
         for (let i = 1; i <= 8; i++) {
             rooms.push({
@@ -196,7 +133,7 @@ function initializeRooms() {
                 amenities: ['AC', 'WiFi', 'TV', 'Bathroom', 'Mini Fridge']
             });
         }
-        
+
         // Floor 3: Deluxe Rooms (301-308)
         for (let i = 1; i <= 8; i++) {
             rooms.push({
@@ -210,7 +147,7 @@ function initializeRooms() {
                 amenities: ['AC', 'WiFi', 'TV', 'Bathroom', 'Mini Fridge', 'Balcony', 'Room Service']
             });
         }
-        
+
         saveToLocalStorage();
         console.log(`✅ Initialized ${rooms.length} rooms (24 total)`);
     }
@@ -230,19 +167,19 @@ function showAlert(message, type = 'info', duration = 5000) {
         border-radius: 12px;
         font-weight: 500;
     `;
-    
+
     const lines = message.split('\n');
     const formattedMessage = lines.map(line => line.trim()).join('<br>');
-    
+
     alertDiv.innerHTML = `
         <div class="d-flex align-items-center">
             <div class="flex-grow-1">${formattedMessage}</div>
             <button type="button" class="btn-close ms-3" onclick="this.parentElement.parentElement.remove()"></button>
         </div>
     `;
-    
+
     document.body.appendChild(alertDiv);
-    
+
     setTimeout(() => {
         if (alertDiv.parentNode) {
             alertDiv.remove();
@@ -279,7 +216,7 @@ function formatDate(dateString) {
     try {
         return new Date(dateString).toLocaleString('en-IN', {
             day: '2-digit',
-            month: '2-digit', 
+            month: '2-digit',
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
@@ -292,14 +229,14 @@ function formatDate(dateString) {
 // ==================== NAVIGATION & SECTIONS (FIXED) ====================
 function showSection(sectionId) {
     console.log(`🔄 Navigating to: ${sectionId}`);
-    
+
     try {
         // Hide all content sections
         const sections = document.querySelectorAll('.content-section');
         sections.forEach(section => {
             section.style.display = 'none';
         });
-        
+
         // Show selected section
         const selectedSection = document.getElementById(sectionId);
         if (selectedSection) {
@@ -310,21 +247,21 @@ function showSection(sectionId) {
             showAlert(`Section ${sectionId} not found. Please check your HTML structure.`, 'danger');
             return;
         }
-        
+
         // Update navigation active state
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.classList.remove('active');
         });
-        
+
         const activeNavLink = document.querySelector(`[onclick*="${sectionId}"]`);
         if (activeNavLink) {
             activeNavLink.classList.add('active');
         }
-        
+
         // Load section-specific content with error handling
         try {
-            switch(sectionId) {
+            switch (sectionId) {
                 case 'dashboard':
                     updateDashboard();
                     break;
@@ -377,7 +314,7 @@ function showSection(sectionId) {
             console.error(`Error loading section ${sectionId}:`, sectionError);
             showAlert(`Error loading ${sectionId} section: ${sectionError.message}`, 'danger');
         }
-        
+
     } catch (error) {
         console.error('❌ Error in showSection:', error);
         showAlert('Error navigating to section. Please try again.', 'danger');
@@ -392,20 +329,20 @@ function updateDashboard() {
         const occupiedRooms = rooms.filter(r => r.status === 'Occupied').length;
         const maintenanceRooms = rooms.filter(r => r.status === 'Under Maintenance').length;
         const occupancyRate = rooms.length > 0 ? Math.round((occupiedRooms / rooms.length) * 100) : 0;
-        
+
         // Calculate financial metrics
         const totalRevenue = payments.reduce((sum, payment) => sum + (payment.amount || 0), 0);
-        const pendingPayments = bookings.filter(b => 
+        const pendingPayments = bookings.filter(b =>
             b.payment_status === 'Pending' || b.payment_status === 'Partial'
         ).reduce((sum, booking) => {
             const paid = payments.filter(p => p.booking_id === booking.id)
                 .reduce((paidSum, payment) => paidSum + (payment.amount || 0), 0);
             return sum + Math.max(0, (booking.total_amount || 0) - paid);
         }, 0);
-        
-        // ✅ FIXED: Calculate today's metrics properly
+
+        // Calculate today's metrics properly
         const today = new Date().toDateString();
-        
+
         // Check-ins today: bookings where check-in date is today
         const checkinsToday = bookings.filter(b => {
             try {
@@ -415,42 +352,42 @@ function updateDashboard() {
                 return false;
             }
         }).length;
-        
-        // ✅ FIXED: Check-outs today: bookings with "Checked Out" status AND actual checkout time is today
+
+        // Check-outs today: bookings with "Checked Out" status AND actual checkout time is today
         const checkoutsToday = bookings.filter(b => {
             try {
                 // Must be checked out
                 if (b.payment_status !== 'Checked Out') {
                     return false;
                 }
-                
+
                 // Check actual checkout time (this is the key fix!)
                 const checkoutTime = b.actual_checkout_time || b.updated_at || b.checkout_time;
                 if (!checkoutTime) {
                     return false;
                 }
-                
+
                 const checkoutDate = new Date(checkoutTime).toDateString();
                 const isToday = checkoutDate === today;
-                
+
                 // Debug logging
                 if (isToday) {
                     console.log(`✅ Found checkout today: Booking #${b.id} at ${checkoutTime}`);
                 }
-                
+
                 return isToday;
             } catch (error) {
                 console.log(`❌ Error checking booking #${b.id}:`, error);
                 return false;
             }
         }).length;
-        
+
         // Calculate guest metrics
         const activeBookings = bookings.filter(b => b.payment_status !== 'Checked Out');
-        const totalActiveGuests = activeBookings.reduce((sum, booking) => 
+        const totalActiveGuests = activeBookings.reduce((sum, booking) =>
             sum + (booking.guest_count || 1), 0
         );
-        
+
         // Update dashboard elements safely
         updateElement('vacant-rooms', vacantRooms);
         updateElement('occupied-rooms', occupiedRooms);
@@ -458,18 +395,18 @@ function updateDashboard() {
         updateElement('total-revenue', formatCurrency(totalRevenue));
         updateElement('pending-payments', formatCurrency(pendingPayments));
         updateElement('checkins-today', checkinsToday);
-        updateElement('checkouts-today', checkoutsToday); // ✅ Now works correctly!
+        updateElement('checkouts-today', checkoutsToday);
         updateElement('total-customers', customers.length);
         updateElement('total-guests', totalActiveGuests);
         updateElement('total-bookings', bookings.length);
-        
+
         // Update dashboard components
         updateRecentBookings();
         updateRoomOverview();
-        
+
         // ✅ Debug info
         console.log(`📊 Dashboard Stats: Check-ins today: ${checkinsToday}, Check-outs today: ${checkoutsToday}`);
-        
+
         console.log('📊 Dashboard updated successfully');
     } catch (error) {
         console.error('❌ Error updating dashboard:', error);
@@ -480,7 +417,7 @@ function updateDashboard() {
 function updateRecentBookings() {
     const recentBookingsDiv = document.getElementById('recent-bookings');
     if (!recentBookingsDiv) return;
-    
+
     try {
         const recentBookings = bookings
             .sort((a, b) => {
@@ -489,7 +426,7 @@ function updateRecentBookings() {
                 return aDate - bDate;
             })
             .slice(0, 6);
-        
+
         if (recentBookings.length === 0) {
             recentBookingsDiv.innerHTML = `
                 <div class="text-center text-muted py-4">
@@ -503,14 +440,14 @@ function updateRecentBookings() {
             `;
             return;
         }
-        
+
         let html = '';
         recentBookings.forEach(booking => {
             const customer = customers.find(c => c.id === booking.customer_id);
             const room = rooms.find(r => r.id === booking.room_id);
             const guestCount = booking.guest_count || 1;
             const statusBadge = getStatusBadge(booking.payment_status);
-            
+
             html += `
                 <div class="d-flex align-items-center border-bottom py-2 booking-item">
                     <div class="flex-grow-1">
@@ -534,7 +471,7 @@ function updateRecentBookings() {
                 </div>
             `;
         });
-        
+
         recentBookingsDiv.innerHTML = html;
     } catch (error) {
         console.error('Error updating recent bookings:', error);
@@ -545,7 +482,7 @@ function updateRecentBookings() {
 function updateRoomOverview() {
     const roomOverviewDiv = document.getElementById('room-overview');
     if (!roomOverviewDiv) return;
-    
+
     try {
         const roomStats = {
             total: rooms.length,
@@ -553,9 +490,9 @@ function updateRoomOverview() {
             occupied: rooms.filter(r => r.status === 'Occupied').length,
             maintenance: rooms.filter(r => r.status === 'Under Maintenance').length
         };
-        
+
         const occupancyRate = roomStats.total > 0 ? Math.round((roomStats.occupied / roomStats.total) * 100) : 0;
-        
+
         roomOverviewDiv.innerHTML = `
             <div class="row g-2 text-center mb-3">
                 <div class="col-3">
@@ -599,13 +536,235 @@ function updateRoomOverview() {
 }
 
 // ==================== CUSTOMER MANAGEMENT (FIXED) ====================
+// function loadEnhancedAddCustomerForm() {
+//     const addCustomerSection = document.getElementById('add-customer');
+//     if (!addCustomerSection) {
+//         console.error('add-customer section not found in HTML');
+//         return;
+//     }
+
+//     addCustomerSection.innerHTML = `
+//         <div class="container-fluid">
+//             <div class="row">
+//                 <div class="col-lg-10 offset-lg-1">
+//                     <div class="card shadow-sm border-0">
+//                         <div class="card-header bg-primary text-white py-3">
+//                             <div class="d-flex align-items-center">
+//                                 <i class="fas fa-user-plus fa-2x me-3"></i>
+//                                 <div>
+//                                     <h4 class="mb-1">Add New Customer</h4>
+//                                     <p class="mb-0 opacity-90">Complete customer registration with WhatsApp marketing</p>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                         <div class="card-body p-4">
+//                             <form id="customer-form" onsubmit="event.preventDefault(); addEnhancedCustomer();">
+
+//                                 <!-- Personal Information Section -->
+//                                 <div class="section-divider mb-4">
+//                                     <h5 class="section-title text-primary">
+//                                         <i class="fas fa-user me-2"></i>Personal Information
+//                                     </h5>
+//                                     <div class="row g-3">
+//                                         <div class="col-md-6">
+//                                             <label class="form-label fw-semibold">Full Name *</label>
+//                                             <input type="text" class="form-control" name="name" 
+//                                                    placeholder="Enter full name" required>
+//                                         </div>
+//                                         <div class="col-md-3">
+//                                             <label class="form-label fw-semibold">Age</label>
+//                                             <input type="number" class="form-control" name="age" 
+//                                                    min="1" max="120" placeholder="Age">
+//                                         </div>
+//                                         <div class="col-md-3">
+//                                             <label class="form-label fw-semibold">Gender</label>
+//                                             <select class="form-select" name="gender">
+//                                                 <option value="">Select Gender</option>
+//                                                 <option value="Male">Male</option>
+//                                                 <option value="Female">Female</option>
+//                                                 <option value="Other">Other</option>
+//                                             </select>
+//                                         </div>
+//                                         <div class="col-md-6">
+//                                             <label class="form-label fw-semibold">Date of Birth</label>
+//                                             <input type="date" class="form-control" name="dob" 
+//                                                    max="${new Date().toISOString().split('T')[0]}">
+//                                         </div>
+//                                         <div class="col-md-6">
+//                                             <label class="form-label fw-semibold">Customer Type</label>
+//                                             <select class="form-select" name="customer_type">
+//                                                 <option value="Regular">Regular Customer</option>
+//                                                 <option value="VIP">VIP Customer</option>
+//                                                 <option value="Corporate">Corporate Customer</option>
+//                                                 <option value="Group">Group Booking</option>
+//                                                 <option value="Wedding">Wedding Party</option>
+//                                             </select>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+
+//                                 <!-- Contact Information Section -->
+//                                 <div class="section-divider mb-4">
+//                                     <h5 class="section-title text-success">
+//                                         <i class="fas fa-phone me-2"></i>Contact Information
+//                                     </h5>
+//                                     <div class="row g-3">
+//                                         <div class="col-md-6">
+//                                             <label class="form-label fw-semibold">Primary Phone Number *</label>
+//                                             <input type="tel" class="form-control" name="phone" 
+//                                                    placeholder="+91 XXXXX XXXXX" required>
+//                                             <small class="text-muted">This will be used for WhatsApp marketing</small>
+//                                         </div>
+//                                         <div class="col-md-6">
+//                                             <label class="form-label fw-semibold">WhatsApp Number</label>
+//                                             <input type="tel" class="form-control" name="whatsapp" 
+//                                                    placeholder="+91 XXXXX XXXXX">
+//                                             <small class="text-muted">Leave blank if same as phone number</small>
+//                                         </div>
+//                                         <div class="col-md-12">
+//                                             <label class="form-label fw-semibold">Email Address *</label>
+//                                             <input type="email" class="form-control" name="email" 
+//                                                    placeholder="customer@example.com" required>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+
+//                                 <!-- ID Documentation Section -->
+//                                 <div class="section-divider mb-4">
+//                                     <h5 class="section-title text-warning">
+//                                         <i class="fas fa-id-card me-2"></i>ID Documentation
+//                                     </h5>
+//                                     <div class="row g-3">
+//                                         <div class="col-md-4">
+//                                             <label class="form-label fw-semibold">ID Type *</label>
+//                                             <select class="form-select" name="id_type" required>
+//                                                 <option value="">Select ID Type</option>
+//                                                 <option value="aadhaar">Aadhaar Card</option>
+//                                                 <option value="pan">PAN Card</option>
+//                                                 <option value="passport">Passport</option>
+//                                                 <option value="driving_license">Driving License</option>
+//                                                 <option value="voter_id">Voter ID</option>
+//                                             </select>
+//                                         </div>
+//                                         <div class="col-md-6 mb-3">
+//   <label class="form-label">Upload ID Photo *</label>
+//   <input type="file" id="customer-id-photo" class="form-control" accept="image/*" required>
+//   <small class="text-muted">Upload photo of ID document (e.g. Aadhaar, Passport)</small>
+// </div>
+// <div class="col-md-6 mb-3">
+//   <label class="form-label">ID Photo Preview</label>
+//   <div id="id-photo-preview" style="min-height:120px; border: 1px solid #ced4da; border-radius: 5px; padding: 10px; text-align:center;">
+//     <i class="fas fa-id-card fa-3x text-muted"></i>
+//     <p class="text-muted">No photo selected</p>
+//   </div>
+// </div>
+
+//                                     </div>
+//                                 </div>
+
+//                                 <!-- Address Information Section -->
+//                                 <div class="section-divider mb-4">
+//                                     <h5 class="section-title text-info">
+//                                         <i class="fas fa-map-marker-alt me-2"></i>Address Information
+//                                     </h5>
+//                                     <div class="row g-3">
+//                                         <div class="col-12">
+//                                             <label class="form-label fw-semibold">Complete Address *</label>
+//                                             <textarea class="form-control" name="address" rows="2" 
+//                                                       placeholder="Enter complete address" required></textarea>
+//                                         </div>
+//                                         <div class="col-md-4">
+//                                             <label class="form-label fw-semibold">City *</label>
+//                                             <input type="text" class="form-control" name="city" 
+//                                                    placeholder="City" required>
+//                                         </div>
+//                                         <div class="col-md-4">
+//                                             <label class="form-label fw-semibold">State *</label>
+//                                             <input type="text" class="form-control" name="state" 
+//                                                    placeholder="State" required>
+//                                         </div>
+//                                         <div class="col-md-4">
+//                                             <label class="form-label fw-semibold">PIN Code *</label>
+//                                             <input type="text" class="form-control" name="pincode" 
+//                                                    placeholder="6-digit PIN" pattern="[0-9]{6}" required>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+
+//                                 <!-- Marketing Preferences -->
+//                                 <div class="section-divider mb-4">
+//                                     <h5 class="section-title text-purple">
+//                                         <i class="fab fa-whatsapp me-2"></i>Marketing Preferences
+//                                     </h5>
+//                                     <div class="row g-3">
+//                                         <div class="col-md-6">
+//                                             <div class="form-check form-switch">
+//                                                 <input class="form-check-input" type="checkbox" name="whatsapp_marketing" 
+//                                                        id="whatsapp_marketing" checked>
+//                                                 <label class="form-check-label fw-semibold" for="whatsapp_marketing">
+//                                                     Enable WhatsApp Marketing
+//                                                 </label>
+//                                             </div>
+//                                             <small class="text-muted">Receive offers, discounts & updates via WhatsApp</small>
+//                                         </div>
+//                                         <div class="col-md-6">
+//                                             <div class="form-check form-switch">
+//                                                 <input class="form-check-input" type="checkbox" name="birthday_offers" 
+//                                                        id="birthday_offers" checked>
+//                                                 <label class="form-check-label fw-semibold" for="birthday_offers">
+//                                                     Birthday Special Offers
+//                                                 </label>
+//                                             </div>
+//                                             <small class="text-muted">Get special birthday discounts & wishes</small>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+
+//                                 <!-- Action Buttons -->
+//                                 <div class="d-flex gap-3 justify-content-center flex-wrap">
+//                                     <button type="submit" class="btn btn-success btn-lg px-4">
+//                                         <i class="fas fa-save me-2"></i>Add Customer
+//                                     </button>
+//                                     <button type="reset" class="btn btn-outline-secondary btn-lg px-4">
+//                                         <i class="fas fa-undo me-2"></i>Reset Form
+//                                     </button>
+//                                 </div>
+//                             </form>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+
+//         <style>
+//         .section-divider {
+//             border-left: 4px solid var(--bs-primary);
+//             padding-left: 1rem;
+//             margin-left: 0.5rem;
+//         }
+//         .section-title {
+//             font-size: 1.1rem;
+//             margin-bottom: 1rem;
+//             font-weight: 600;
+//         }
+//         .form-control:focus, .form-select:focus {
+//             border-color: var(--bs-primary);
+//             box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+//         }
+//         .text-purple { color: #6f42c1 !important; }
+//         </style>
+//     `;
+
+//     console.log('✅ Add customer form loaded');
+// }
+
 function loadEnhancedAddCustomerForm() {
     const addCustomerSection = document.getElementById('add-customer');
     if (!addCustomerSection) {
         console.error('add-customer section not found in HTML');
         return;
     }
-    
+
     addCustomerSection.innerHTML = `
         <div class="container-fluid">
             <div class="row">
@@ -622,7 +781,7 @@ function loadEnhancedAddCustomerForm() {
                         </div>
                         <div class="card-body p-4">
                             <form id="customer-form" onsubmit="event.preventDefault(); addEnhancedCustomer();">
-                                
+
                                 <!-- Personal Information Section -->
                                 <div class="section-divider mb-4">
                                     <h5 class="section-title text-primary">
@@ -631,13 +790,11 @@ function loadEnhancedAddCustomerForm() {
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <label class="form-label fw-semibold">Full Name *</label>
-                                            <input type="text" class="form-control" name="name" 
-                                                   placeholder="Enter full name" required>
+                                            <input type="text" class="form-control" name="name" placeholder="Enter full name" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label fw-semibold">Age</label>
-                                            <input type="number" class="form-control" name="age" 
-                                                   min="1" max="120" placeholder="Age">
+                                            <input type="number" class="form-control" name="age" min="1" max="120" placeholder="Age">
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label fw-semibold">Gender</label>
@@ -650,8 +807,7 @@ function loadEnhancedAddCustomerForm() {
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label fw-semibold">Date of Birth</label>
-                                            <input type="date" class="form-control" name="dob" 
-                                                   max="${new Date().toISOString().split('T')[0]}">
+                                            <input type="date" class="form-control" name="dob" max="${new Date().toISOString().split('T')[0]}">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label fw-semibold">Customer Type</label>
@@ -674,20 +830,17 @@ function loadEnhancedAddCustomerForm() {
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <label class="form-label fw-semibold">Primary Phone Number *</label>
-                                            <input type="tel" class="form-control" name="phone" 
-                                                   placeholder="+91 XXXXX XXXXX" required>
+                                            <input type="tel" class="form-control" name="phone" placeholder="+91 XXXXX XXXXX" required>
                                             <small class="text-muted">This will be used for WhatsApp marketing</small>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label fw-semibold">WhatsApp Number</label>
-                                            <input type="tel" class="form-control" name="whatsapp" 
-                                                   placeholder="+91 XXXXX XXXXX">
+                                            <input type="tel" class="form-control" name="whatsapp" placeholder="+91 XXXXX XXXXX">
                                             <small class="text-muted">Leave blank if same as phone number</small>
                                         </div>
                                         <div class="col-md-12">
                                             <label class="form-label fw-semibold">Email Address *</label>
-                                            <input type="email" class="form-control" name="email" 
-                                                   placeholder="customer@example.com" required>
+                                            <input type="email" class="form-control" name="email" placeholder="customer@example.com" required>
                                         </div>
                                     </div>
                                 </div>
@@ -698,24 +851,54 @@ function loadEnhancedAddCustomerForm() {
                                         <i class="fas fa-id-card me-2"></i>ID Documentation
                                     </h5>
                                     <div class="row g-3">
-                                        <div class="col-md-4">
-                                            <label class="form-label fw-semibold">ID Type *</label>
-                                            <select class="form-select" name="id_type" required>
-                                                <option value="">Select ID Type</option>
-                                                <option value="aadhaar">Aadhaar Card</option>
-                                                <option value="pan">PAN Card</option>
-                                                <option value="passport">Passport</option>
-                                                <option value="driving_license">Driving License</option>
-                                                <option value="voter_id">Voter ID</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <label class="form-label fw-semibold">ID Number *</label>
-                                            <input type="text" class="form-control" name="aadhaar"
-                                                   placeholder="Enter ID number" required>
-                                        </div>
-                                    </div>
-                                </div>
+  <!-- ID Type -->
+  <div class="col-md-4">
+    <label class="form-label fw-semibold">ID Type *</label>
+    <select class="form-select" name="id_type" required>
+      <option value="">Select ID Type</option>
+      <option value="aadhaar" selected>Aadhaar Card</option>
+      <option value="pan">PAN Card</option>
+      <option value="passport">Passport</option>
+      <option value="driving_license">Driving License</option>
+      <option value="voter_id">Voter ID</option>
+    </select>
+  </div>
+
+  <!-- Upload ID Photo 1 -->
+  <div class="col-md-4">
+    <label class="form-label">Upload ID Photo 1 *</label>
+    <input type="file" id="customer-id-photo1" class="form-control" accept="image/*" required>
+    <small class="text-muted">Upload photo of ID document (e.g. Aadhaar, Passport)</small>
+  </div>
+
+  <!-- Upload ID Photo 2 -->
+  <div class="col-md-4">
+    <label class="form-label">Upload ID Photo 2 *</label>
+    <input type="file" id="customer-id-photo2" class="form-control" accept="image/*" required>
+    <small class="text-muted">Upload second side of ID (if any)</small>
+  </div>
+</div>
+
+<!-- Previews row -->
+<div class="row mt-3">
+  <div class="col-md-6">
+    <label class="form-label">ID Photo Preview 1</label>
+    <div id="id-photo-preview1" class="border rounded" 
+         style="min-height:120px; padding:10px; display:flex; justify-content:center; align-items:center;">
+      <i class="fas fa-id-card fa-3x text-muted"></i>
+      <p class="text-muted">No photo selected</p>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">ID Photo Preview 2</label>
+    <div id="id-photo-preview2" class="border rounded"
+         style="min-height:120px; padding:10px; display:flex; justify-content:center; align-items:center;">
+      <i class="fas fa-id-card fa-3x text-muted"></i>
+      <p class="text-muted">No photo selected</p>
+    </div>
+  </div>
+</div>
+
 
                                 <!-- Address Information Section -->
                                 <div class="section-divider mb-4">
@@ -725,23 +908,19 @@ function loadEnhancedAddCustomerForm() {
                                     <div class="row g-3">
                                         <div class="col-12">
                                             <label class="form-label fw-semibold">Complete Address *</label>
-                                            <textarea class="form-control" name="address" rows="2" 
-                                                      placeholder="Enter complete address" required></textarea>
+                                            <textarea class="form-control" name="address" rows="2" placeholder="Enter complete address" required></textarea>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label fw-semibold">City *</label>
-                                            <input type="text" class="form-control" name="city" 
-                                                   placeholder="City" required>
+                                            <input type="text" class="form-control" name="city" placeholder="City" required value="Noida">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label fw-semibold">State *</label>
-                                            <input type="text" class="form-control" name="state" 
-                                                   placeholder="State" required>
+                                            <input type="text" class="form-control" name="state" placeholder="State" required value="Uttar Pradesh">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label fw-semibold">PIN Code *</label>
-                                            <input type="text" class="form-control" name="pincode" 
-                                                   placeholder="6-digit PIN" pattern="[0-9]{6}" required>
+                                            <input type="text" class="form-control" name="pincode" pattern="[0-9]{6}" placeholder="6-digit PIN" required value="201301">
                                         </div>
                                     </div>
                                 </div>
@@ -754,21 +933,15 @@ function loadEnhancedAddCustomerForm() {
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="whatsapp_marketing" 
-                                                       id="whatsapp_marketing" checked>
-                                                <label class="form-check-label fw-semibold" for="whatsapp_marketing">
-                                                    Enable WhatsApp Marketing
-                                                </label>
+                                                <input class="form-check-input" type="checkbox" name="whatsapp_marketing" id="whatsapp_marketing" checked>
+                                                <label class="form-check-label fw-semibold" for="whatsapp_marketing">Enable WhatsApp Marketing</label>
                                             </div>
                                             <small class="text-muted">Receive offers, discounts & updates via WhatsApp</small>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="birthday_offers" 
-                                                       id="birthday_offers" checked>
-                                                <label class="form-check-label fw-semibold" for="birthday_offers">
-                                                    Birthday Special Offers
-                                                </label>
+                                                <input class="form-check-input" type="checkbox" name="birthday_offers" id="birthday_offers" checked>
+                                                <label class="form-check-label fw-semibold" for="birthday_offers">Birthday Special Offers</label>
                                             </div>
                                             <small class="text-muted">Get special birthday discounts & wishes</small>
                                         </div>
@@ -784,13 +957,14 @@ function loadEnhancedAddCustomerForm() {
                                         <i class="fas fa-undo me-2"></i>Reset Form
                                     </button>
                                 </div>
+
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <style>
         .section-divider {
             border-left: 4px solid var(--bs-primary);
@@ -809,30 +983,320 @@ function loadEnhancedAddCustomerForm() {
         .text-purple { color: #6f42c1 !important; }
         </style>
     `;
-    
+
+    ['1', '2'].forEach(num => {
+        document.getElementById(`customer-id-photo${num}`).addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById(`id-photo-preview${num}`);
+
+            if (!file) {
+                preview.innerHTML = '<i class="fas fa-id-card fa-3x text-muted"></i><p class="text-muted">No photo selected</p>';
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) {
+                alert('ID photo must be less than 2 MB');
+                this.value = '';
+                preview.innerHTML = '<i class="fas fa-id-card fa-3x text-muted"></i><p class="text-muted">No photo selected</p>';
+                return;
+            }
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!validTypes.includes(file.type)) {
+                alert('Please upload a valid image (JPEG, PNG, GIF)');
+                this.value = '';
+                preview.innerHTML = '<i class="fas fa-id-card fa-3x text-muted"></i><p class="text-muted">No photo selected</p>';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                preview.innerHTML = `<img src="${event.target.result}" alt="ID Photo" style="max-height:100px; max-width: 100%; object-fit: contain; border-radius: 5px;" />`;
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+
     console.log('✅ Add customer form loaded');
 }
+['1', '2'].forEach(num => {
+    document.getElementById(`customer-id-photo${num}`).addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById(`id-photo-preview${num}`);
+
+        if (!file) {
+            preview.innerHTML = '<i class="fas fa-id-card fa-3x text-muted"></i><p class="text-muted">No photo selected</p>';
+            return;
+        }
+
+        if (file.size > 2 * 1024 * 1024) {
+            alert('ID photo must be less than 2 MB');
+            this.value = '';
+            preview.innerHTML = '<i class="fas fa-id-card fa-3x text-muted"></i><p class="text-muted">No photo selected</p>';
+            return;
+        }
+
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!validTypes.includes(file.type)) {
+            alert('Please upload a valid image (JPEG, PNG, GIF)');
+            this.value = '';
+            preview.innerHTML = '<i class="fas fa-id-card fa-3x text-muted"></i><p class="text-muted">No photo selected</p>';
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            preview.innerHTML = `<img src="${event.target.result}" alt="ID Photo ${num}" 
+        style="max-width:100%; max-height:100px; object-fit:contain; border-radius:5px;" />`;
+        };
+        reader.readAsDataURL(file);
+    });
+});
+
+
+
+// function addEnhancedCustomer() {
+//     try {
+//         const form = document.getElementById('customer-form');
+//         if (!form) return;
+
+//         const formData = new FormData(form);
+
+//         // Validate required fields
+//         const requiredFields = ['name', 'phone', 'email', 'id_type', 'aadhaar', 'address', 'city', 'state', 'pincode'];
+//         const missingFields = requiredFields.filter(field => !formData.get(field)?.trim());
+
+//         if (missingFields.length > 0) {
+//             showAlert(`Please fill all required fields:\n${missingFields.join(', ')}`, 'danger');
+//             return;
+//         }
+
+//         // Check for existing customer
+//         const phoneNumber = formData.get('phone').trim();
+//         const existingCustomer = customers.find(c => c.phone === phoneNumber);
+
+//         if (existingCustomer) {
+//             if (confirm(`⚠️ Customer Already Exists!\n\nName: ${existingCustomer.name}\nPhone: ${existingCustomer.phone}\n\nWould you like to update their information instead?`)) {
+//                 updateCustomerData(existingCustomer, formData);
+//                 return;
+//             } else {
+//                 return;
+//             }
+//         }
+
+//         // Create enhanced customer object
+//         const customer = {
+//             id: nextCustomerId++,
+
+
+//             // Personal Information
+//             name: formData.get('name').trim(),
+//             age: parseInt(formData.get('age')) || null,
+//             gender: formData.get('gender') || '',
+//             dob: formData.get('dob') || '',
+//             customer_type: formData.get('customer_type') || 'Regular',
+
+//             // Contact Information
+//             phone: formData.get('phone').trim(),
+//             whatsapp: formData.get('whatsapp')?.trim() || formData.get('phone').trim(),
+//             email: formData.get('email').trim(),
+
+//             // ID Documentation
+//             id_type: formData.get('id_type'),
+//             aadhaar: formData.get('aadhaar').trim(),
+
+//             // Address Information
+//             address: formData.get('address').trim(),
+//             city: formData.get('city').trim(),
+//             state: formData.get('state').trim(),
+//             pincode: formData.get('pincode').trim(),
+//             country: 'India',
+
+//             // Marketing Preferences
+//             whatsapp_marketing: formData.get('whatsapp_marketing') === 'on',
+//             birthday_offers: formData.get('birthday_offers') === 'on',
+
+//             // System fields
+//             id_verified: true,
+//             government_compliance: true,
+//             created_at: new Date().toISOString(),
+//             last_updated: new Date().toISOString()
+//         };
+
+//         customers.push(customer);
+//         saveToLocalStorage();
+
+//         // Show success message
+//         showAlert(`✅ Customer Added Successfully!\n\n👤 Name: ${customer.name}\n📱 Phone/WhatsApp: ${customer.whatsapp}\n🎯 Marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}\n\n🎉 Ready for bookings and WhatsApp marketing!`, 'success', 6000);
+
+//         // Clear form
+//         form.reset();
+//         updateDashboard();
+
+//         // Ask about creating booking
+//         setTimeout(() => {
+//             if (confirm(`🎉 Customer "${customer.name}" added successfully!\n\nCustomer ID: ${customer.id}\nWhatsApp marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}\n\n📋 Would you like to create a booking for this customer now?`)) {
+//                 showSection('new-booking');
+//             }
+//         }, 2000);
+
+//     } catch (error) {
+//         console.error('❌ Error adding enhanced customer:', error);
+//         showAlert('❌ Error adding customer. Please check all fields and try again.', 'danger');
+//     }
+// }
+
+// function addEnhancedCustomer() {
+//     try {
+//         const form = document.getElementById('customer-form');
+//         if (!form) return;
+
+//         const formData = new FormData(form);
+
+//         // Validate required fields (remove 'aadhaar' because photo is required now)
+//         const requiredFields = ['name', 'phone', 'email', 'id_type', 'address', 'city', 'state', 'pincode'];
+//         const missingFields = requiredFields.filter(field => !formData.get(field)?.trim());
+
+//         // Check for ID Photo file
+//         // const photoInput = document.getElementById('customer-id-photo');
+//         // if (!photoInput || !photoInput.files || !photoInput.files[0]) {
+//         //     showAlert('Please upload an ID Photo.', 'danger');
+//         //     return;
+//         // }
+//         // Validate both ID photos
+//     const photoInput1 = document.getElementById('customer-id-photo1');
+//     const photoInput2 = document.getElementById('customer-id-photo2');
+//     if (!photoInput1 || !photoInput1.files || !photoInput1.files[0]) {
+//       showAlert('Please upload the first ID Photo.', 'danger');
+//       return;
+//     }
+//     if (!photoInput2 || !photoInput2.files || !photoInput2.files[0]) {
+//       showAlert('Please upload the second ID Photo.', 'danger');
+//       return;
+//     }
+
+//         if (missingFields.length > 0) {
+//             showAlert(`Please fill all required fields:\n${missingFields.join(', ')}`, 'danger');
+//             return;
+//         }
+
+//         // Check for existing customer by phone
+//         const phoneNumber = formData.get('phone').trim();
+//         const existingCustomer = customers.find(c => c.phone === phoneNumber);
+
+//         if (existingCustomer) {
+//             if (confirm(`⚠️ Customer Already Exists!\n\nName: ${existingCustomer.name}\nPhone: ${existingCustomer.phone}\n\nWould you like to update their information instead?`)) {
+//                 updateCustomerData(existingCustomer, formData);
+//                 return;
+//             } else {
+//                 return;
+//             }
+//         }
+
+//         // Read ID photo
+//         const reader = new FileReader();
+//         reader.onload = function(e) {
+//             const idPhotoData = e.target.result; // base64 encoded photo
+
+//             // Create enhanced customer object with photo
+//             const customer = {
+//                 id: nextCustomerId++,
+
+//                 // Personal Information
+//                 name: formData.get('name').trim(),
+//                 age: parseInt(formData.get('age')) || null,
+//                 gender: formData.get('gender') || '',
+//                 dob: formData.get('dob') || '',
+//                 customer_type: formData.get('customer_type') || 'Regular',
+
+//                 // Contact Information
+//                 phone: formData.get('phone').trim(),
+//                 whatsapp: formData.get('whatsapp')?.trim() || formData.get('phone').trim(),
+//                 email: formData.get('email').trim(),
+
+//                 // ID Documentation (replace 'aadhaar' field with photo)
+//                 id_type: formData.get('id_type'),
+//                 idPhoto: idPhotoData,
+
+//                 // Address Information
+//                 address: formData.get('address').trim(),
+//                 city: formData.get('city').trim(),
+//                 state: formData.get('state').trim(),
+//                 pincode: formData.get('pincode').trim(),
+//                 country: 'India',
+
+//                 // Marketing Preferences
+//                 whatsapp_marketing: formData.get('whatsapp_marketing') === 'on',
+//                 birthday_offers: formData.get('birthday_offers') === 'on',
+
+//                 // System fields
+//                 id_verified: true,
+//                 government_compliance: true,
+//                 created_at: new Date().toISOString(),
+//                 last_updated: new Date().toISOString()
+//             };
+
+//             customers.push(customer);
+//             saveToLocalStorage();
+
+//             // Show success message
+//             showAlert(`✅ Customer Added Successfully!\n\n👤 Name: ${customer.name}\n📱 Phone/WhatsApp: ${customer.whatsapp}\n🎯 Marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}\n\n🎉 Ready for bookings and WhatsApp marketing!`, 'success', 6000);
+
+//             // Clear form and photo preview
+//             form.reset();
+//             document.getElementById('id-photo-preview').innerHTML = `
+//                 <i class="fas fa-id-card fa-3x text-muted"></i>
+//                 <p class="text-muted mb-0">No photo selected</p>
+//             `;
+
+//             updateDashboard();
+
+//             // Ask about creating booking
+//             setTimeout(() => {
+//                 if (confirm(`🎉 Customer "${customer.name}" added successfully!\n\nCustomer ID: ${customer.id}\nWhatsApp marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}\n\n📋 Would you like to create a booking for this customer now?`)) {
+//                     showSection('new-booking');
+//                 }
+//             }, 2000);
+//         };
+
+//         reader.readAsDataURL(photoInput.files[0]);
+
+//     } catch (error) {
+//         console.error('❌ Error adding enhanced customer:', error);
+//         showAlert('❌ Error adding customer. Please check all fields and try again.', 'danger');
+//     }
+// }
+
 
 function addEnhancedCustomer() {
     try {
         const form = document.getElementById('customer-form');
         if (!form) return;
-        
+
         const formData = new FormData(form);
-        
-        // Validate required fields
-        const requiredFields = ['name', 'phone', 'email', 'id_type', 'aadhaar', 'address', 'city', 'state', 'pincode'];
+
+        // Validate required fields except id photos (they are validated separately)
+        const requiredFields = ['name', 'phone', 'email', 'id_type', 'address', 'city', 'state', 'pincode'];
         const missingFields = requiredFields.filter(field => !formData.get(field)?.trim());
-        
+
         if (missingFields.length > 0) {
             showAlert(`Please fill all required fields:\n${missingFields.join(', ')}`, 'danger');
             return;
         }
-        
-        // Check for existing customer
+
+        // Validate both ID photos
+        const photoInput1 = document.getElementById('customer-id-photo1');
+        const photoInput2 = document.getElementById('customer-id-photo2');
+        if (!photoInput1 || !photoInput1.files || !photoInput1.files[0]) {
+            showAlert('Please upload the first ID Photo.', 'danger');
+            return;
+        }
+        if (!photoInput2 || !photoInput2.files || !photoInput2.files[0]) {
+            showAlert('Please upload the second ID Photo.', 'danger');
+            return;
+        }
+
+        // Check existing customer by phone
         const phoneNumber = formData.get('phone').trim();
         const existingCustomer = customers.find(c => c.phone === phoneNumber);
-        
         if (existingCustomer) {
             if (confirm(`⚠️ Customer Already Exists!\n\nName: ${existingCustomer.name}\nPhone: ${existingCustomer.phone}\n\nWould you like to update their information instead?`)) {
                 updateCustomerData(existingCustomer, formData);
@@ -841,65 +1305,75 @@ function addEnhancedCustomer() {
                 return;
             }
         }
-        
-        // Create enhanced customer object
-        const customer = {
-            id: nextCustomerId++,
-            
-            // Personal Information
-            name: formData.get('name').trim(),
-            age: parseInt(formData.get('age')) || null,
-            gender: formData.get('gender') || '',
-            dob: formData.get('dob') || '',
-            customer_type: formData.get('customer_type') || 'Regular',
-            
-            // Contact Information
-            phone: formData.get('phone').trim(),
-            whatsapp: formData.get('whatsapp')?.trim() || formData.get('phone').trim(),
-            email: formData.get('email').trim(),
-            
-            // ID Documentation
-            id_type: formData.get('id_type'),
-            aadhaar: formData.get('aadhaar').trim(),
-            
-            // Address Information
-            address: formData.get('address').trim(),
-            city: formData.get('city').trim(),
-            state: formData.get('state').trim(),
-            pincode: formData.get('pincode').trim(),
-            country: 'India',
-            
-            // Marketing Preferences
-            whatsapp_marketing: formData.get('whatsapp_marketing') === 'on',
-            birthday_offers: formData.get('birthday_offers') === 'on',
-            
-            // System fields
-            id_verified: true,
-            government_compliance: true,
-            created_at: new Date().toISOString(),
-            last_updated: new Date().toISOString()
+
+        // Read first photo file, then second, then save customer
+        const reader1 = new FileReader();
+        reader1.onload = function (e1) {
+            const idPhoto1Data = e1.target.result;
+
+            const reader2 = new FileReader();
+            reader2.onload = function (e2) {
+                const idPhoto2Data = e2.target.result;
+
+                const customer = {
+                    id: nextCustomerId++,
+                    name: formData.get('name').trim(),
+                    age: parseInt(formData.get('age')) || null,
+                    gender: formData.get('gender') || '',
+                    dob: formData.get('dob') || '',
+                    customer_type: formData.get('customer_type') || 'Regular',
+                    phone: formData.get('phone').trim(),
+                    whatsapp: formData.get('whatsapp')?.trim() || formData.get('phone').trim(),
+                    email: formData.get('email').trim(),
+                    id_type: formData.get('id_type'),
+                    idPhoto1: idPhoto1Data,
+                    idPhoto2: idPhoto2Data,
+                    address: formData.get('address').trim(),
+                    city: formData.get('city').trim(),
+                    state: formData.get('state').trim(),
+                    pincode: formData.get('pincode').trim(),
+                    country: 'India',
+                    whatsapp_marketing: formData.get('whatsapp_marketing') === 'on',
+                    birthday_offers: formData.get('birthday_offers') === 'on',
+                    id_verified: true,
+                    government_compliance: true,
+                    created_at: new Date().toISOString(),
+                    last_updated: new Date().toISOString()
+                };
+
+                customers.push(customer);
+                saveToLocalStorage();
+
+                showAlert(`✅ Customer Added Successfully!\n\n👤 Name: ${customer.name}\n📱 Phone/WhatsApp: ${customer.whatsapp}\n🎯 Marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}`, 'success', 6000);
+
+                form.reset();
+                document.getElementById('id-photo-preview1').innerHTML = '<i class="fas fa-id-card fa-3x text-muted"></i><p class="text-muted mb-0">No photo selected</p>';
+                document.getElementById('id-photo-preview2').innerHTML = '<i class="fas fa-id-card fa-3x text-muted"></i><p class="text-muted mb-0">No photo selected</p>';
+
+                updateDashboard();
+
+                setTimeout(() => {
+                    if (confirm(`🎉 Customer "${customer.name}" added successfully!\n\nCustomer ID: ${customer.id}\nWhatsApp marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}\n\n📋 Would you like to create a booking for this customer now?`)) {
+                        showSection('new-booking');
+                    }
+                }, 2000);
+            };
+            reader2.readAsDataURL(photoInput2.files[0]);
         };
-        
-        customers.push(customer);
-        saveToLocalStorage();
-        
-        // Show success message
-        showAlert(`✅ Customer Added Successfully!\n\n👤 Name: ${customer.name}\n📱 Phone/WhatsApp: ${customer.whatsapp}\n🎯 Marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}\n\n🎉 Ready for bookings and WhatsApp marketing!`, 'success', 6000);
-        
-        // Clear form
-        form.reset();
-        updateDashboard();
-        
-        // Ask about creating booking
-        setTimeout(() => {
-            if (confirm(`🎉 Customer "${customer.name}" added successfully!\n\nCustomer ID: ${customer.id}\nWhatsApp marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}\n\n📋 Would you like to create a booking for this customer now?`)) {
-                showSection('new-booking');
-            }
-        }, 2000);
-        
+        reader1.readAsDataURL(photoInput1.files[0]);
+
     } catch (error) {
         console.error('❌ Error adding enhanced customer:', error);
         showAlert('❌ Error adding customer. Please check all fields and try again.', 'danger');
+    }
+}
+
+
+function renderCustomerIdPhoto(customer) {
+    if (customer.idPhoto) {
+        return `<img src="${customer.idPhoto}" alt="ID Photo" style="width:40px; height:40px; object-fit:cover; border-radius:5px;">`;
+    } else {
+        return '<i class="fas fa-id-card text-muted"></i>';
     }
 }
 
@@ -925,13 +1399,13 @@ function updateCustomerData(existingCustomer, formData) {
             birthday_offers: formData.get('birthday_offers') === 'on',
             last_updated: new Date().toISOString()
         });
-        
+
         saveToLocalStorage();
         showAlert(`✅ Customer Information Updated!\n\n👤 Name: ${existingCustomer.name}\n📱 WhatsApp: ${existingCustomer.whatsapp}\n🎯 Marketing: ${existingCustomer.whatsapp_marketing ? 'Enabled' : 'Disabled'}`, 'success');
-        
+
         document.getElementById('customer-form').reset();
         updateDashboard();
-        
+
     } catch (error) {
         console.error('❌ Error updating customer:', error);
         showAlert('❌ Error updating customer information.', 'danger');
@@ -945,7 +1419,7 @@ function loadSearchCustomers() {
         console.error('search-customers section not found');
         return;
     }
-    
+
     searchSection.innerHTML = `
         <div class="container-fluid">
             <div class="card">
@@ -984,7 +1458,7 @@ function loadSearchCustomers() {
             </div>
         </div>
     `;
-    
+
     console.log('✅ Search customers loaded');
 }
 
@@ -993,9 +1467,9 @@ function searchCustomers() {
         const query = document.getElementById('search-input')?.value.toLowerCase() || '';
         const customerType = document.getElementById('customer-type-filter')?.value || '';
         const searchResultsDiv = document.getElementById('search-results');
-        
+
         if (!searchResultsDiv) return;
-        
+
         if (query.length < 2 && !customerType) {
             searchResultsDiv.innerHTML = `
                 <div class="text-center text-muted py-5">
@@ -1006,7 +1480,7 @@ function searchCustomers() {
             `;
             return;
         }
-        
+
         let results = customers.filter(customer => {
             const matchesQuery = !query || (
                 customer.name.toLowerCase().includes(query) ||
@@ -1014,11 +1488,11 @@ function searchCustomers() {
                 customer.email.toLowerCase().includes(query) ||
                 (customer.whatsapp && customer.whatsapp.includes(query))
             );
-            
+
             const matchesType = !customerType || customer.customer_type === customerType;
             return matchesQuery && matchesType;
         });
-        
+
         if (results.length === 0) {
             searchResultsDiv.innerHTML = `
                 <div class="text-center py-5">
@@ -1030,7 +1504,7 @@ function searchCustomers() {
             `;
             return;
         }
-        
+
         displaySearchResults(results);
     } catch (error) {
         console.error('Error searching customers:', error);
@@ -1038,69 +1512,71 @@ function searchCustomers() {
     }
 }
 
-function displaySearchResults(results) {
-    const searchResultsDiv = document.getElementById('search-results');
-    if (!searchResultsDiv) return;
-    
-    let html = `
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h6 class="mb-0">Found ${results.length} customer${results.length !== 1 ? 's' : ''}</h6>
-        </div>
-        <div class="row g-3">
-    `;
-    
-    results.forEach(customer => {
-        const isVIP = customer.customer_type === 'VIP';
-        const bookingCount = bookings.filter(b => b.customer_id === customer.id).length;
-        
-        html += `
-            <div class="col-lg-6 col-xl-4">
-                <div class="card h-100 ${isVIP ? 'border-warning' : ''}">
-                    <div class="card-header ${isVIP ? 'bg-warning text-dark' : 'bg-primary text-white'} py-2">
-                        <h6 class="mb-0">${customer.name} ${isVIP ? '<i class="fas fa-crown ms-1"></i>' : ''}</h6>
-                    </div>
-                    <div class="card-body p-3">
-                        <div class="small">
-                            <p class="mb-1"><strong>📱 Phone:</strong> ${customer.phone}</p>
-                            <p class="mb-1"><strong>💬 WhatsApp:</strong> ${customer.whatsapp}</p>
-                            <p class="mb-1"><strong>📧 Email:</strong> ${customer.email}</p>
-                            <p class="mb-1"><strong>📋 Bookings:</strong> ${bookingCount}</p>
-                            <p class="mb-1"><strong>🎯 Marketing:</strong> 
-                                <span class="badge bg-${customer.whatsapp_marketing ? 'success' : 'secondary'}">
-                                    ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card-footer p-2">
-                        <div class="btn-group w-100" role="group">
-                            <button class="btn btn-sm btn-outline-info" onclick="viewCustomerDetails(${customer.id})">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-success" onclick="createBookingForCustomer(${customer.id})">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-primary" onclick="sendWhatsAppMessage(${customer.id})">
-                                <i class="fab fa-whatsapp"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
-    
-    html += '</div>';
-    searchResultsDiv.innerHTML = html;
-}
+// function displaySearchResults(results) {
+//     const searchResultsDiv = document.getElementById('search-results');
+//     if (!searchResultsDiv) return;
+
+//     let html = `
+//         <div class="d-flex justify-content-between align-items-center mb-3">
+//             <h6 class="mb-0">Found ${results.length} customer${results.length !== 1 ? 's' : ''}</h6>
+//         </div>
+//         <div class="row g-3">
+//     `;
+
+//     results.forEach(customer => {
+//         const isVIP = customer.customer_type === 'VIP';
+//         const bookingCount = bookings.filter(b => b.customer_id === customer.id).length;
+
+//         html += `
+//             <div class="col-lg-6 col-xl-4">
+//                 <div class="card h-100 ${isVIP ? 'border-warning' : ''}">
+//                     <div class="card-header ${isVIP ? 'bg-warning text-dark' : 'bg-primary text-white'} py-2">
+//                         <h6 class="mb-0">${customer.name} ${isVIP ? '<i class="fas fa-crown ms-1"></i>' : ''}</h6>
+//                     </div>
+//                     <div class="card-body p-3">
+//                         <div class="small">
+//                             <p class="mb-1"><strong>📱 Phone:</strong> ${customer.phone}</p>
+//                             <p class="mb-1"><strong>💬 WhatsApp:</strong> ${customer.whatsapp}</p>
+//                             <p class="mb-1"><strong>📧 Email:</strong> ${customer.email}</p>
+//                             <p class="mb-1"><strong>📋 Bookings:</strong> ${bookingCount}</p>
+//                             <p class="mb-1"><strong>🎯 Marketing:</strong> 
+//                                 <span class="badge bg-${customer.whatsapp_marketing ? 'success' : 'secondary'}">
+//                                     ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}
+//                                 </span>
+//                             </p>
+//                         </div>
+//                     </div>
+//                     <div class="card-footer p-2">
+//                         <div class="btn-group w-100" role="group">
+//                             <button class="btn btn-sm btn-outline-info" onclick="viewCustomerDetails(${customer.id})">
+//                                 <i class="fas fa-eye"></i>
+//                             </button>
+//                             <button class="btn btn-sm btn-outline-success" onclick="createBookingForCustomer(${customer.id})">
+//                                 <i class="fas fa-plus"></i>
+//                             </button>
+//                             <button class="btn btn-sm btn-outline-primary" onclick="sendWhatsAppMessage(${customer.id})">
+//                                 <i class="fab fa-whatsapp"></i>
+//                             </button>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         `;
+//     });
+
+//     html += '</div>';
+//     searchResultsDiv.innerHTML = html;
+// }
+
+
 
 function clearSearchFilters() {
     const searchInput = document.getElementById('search-input');
     const typeFilter = document.getElementById('customer-type-filter');
-    
+
     if (searchInput) searchInput.value = '';
     if (typeFilter) typeFilter.value = '';
-    
+
     const searchResultsDiv = document.getElementById('search-results');
     if (searchResultsDiv) {
         searchResultsDiv.innerHTML = `
@@ -1119,7 +1595,7 @@ function loadCustomerList() {
         console.error('customer-list-content section not found');
         return;
     }
-    
+
     if (customers.length === 0) {
         customerListDiv.innerHTML = `
             <div class="text-center py-5">
@@ -1133,7 +1609,7 @@ function loadCustomerList() {
         `;
         return;
     }
-    
+
     displayCustomerList(customers);
     console.log('✅ Customer list loaded');
 }
@@ -1141,7 +1617,7 @@ function loadCustomerList() {
 function displayCustomerList(customersToShow) {
     const customerListDiv = document.getElementById('customer-list-content');
     if (!customerListDiv) return;
-    
+
     const sortedCustomers = [...customersToShow].sort((a, b) => {
         try {
             return new Date(b.created_at) - new Date(a.created_at);
@@ -1149,7 +1625,7 @@ function displayCustomerList(customersToShow) {
             return 0;
         }
     });
-    
+
     let html = `
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
@@ -1177,11 +1653,11 @@ function displayCustomerList(customersToShow) {
                 </thead>
                 <tbody>
     `;
-    
+
     sortedCustomers.forEach(customer => {
         const bookingCount = bookings.filter(b => b.customer_id === customer.id).length;
         const isVIP = customer.customer_type === 'VIP';
-        
+
         html += `
             <tr class="${isVIP ? 'table-warning' : ''}">
                 <td>
@@ -1225,8 +1701,8 @@ function displayCustomerList(customersToShow) {
                 </td>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <button class="btn btn-outline-info" onclick="viewCustomerDetails(${customer.id})">
-                            <i class="fas fa-eye"></i>
+                        <button class="btn btn-outline-info" onclick="showCustomerDetails(${customer.id})">
+                            View
                         </button>
                         <button class="btn btn-outline-success" onclick="createBookingForCustomer(${customer.id})">
                             <i class="fas fa-plus"></i>
@@ -1239,7 +1715,7 @@ function displayCustomerList(customersToShow) {
             </tr>
         `;
     });
-    
+
     html += `
                 </tbody>
             </table>
@@ -1257,32 +1733,303 @@ function displayCustomerList(customersToShow) {
         }
         </style>
     `;
-    
+
     customerListDiv.innerHTML = html;
 }
 
-function viewCustomerDetails(customerId) {
-    const customer = customers.find(c => c.id === customerId);
-    if (!customer) {
-        showAlert('Customer not found!', 'danger');
-        return;
-    }
-    
-    const customerBookings = bookings.filter(b => b.customer_id === customerId);
-    let details = `👤 CUSTOMER DETAILS\n\n`;
-    details += `Name: ${customer.name}\n`;
-    details += `Phone: ${customer.phone}\n`;
-    details += `WhatsApp: ${customer.whatsapp}\n`;
-    details += `Email: ${customer.email}\n`;
-    details += `Address: ${customer.address}\n`;
-    details += `City: ${customer.city}, ${customer.state}\n`;
-    details += `Type: ${customer.customer_type}\n`;
-    details += `Total Bookings: ${customerBookings.length}\n`;
-    details += `WhatsApp Marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}\n`;
-    details += `Birthday Offers: ${customer.birthday_offers ? 'Enabled' : 'Disabled'}\n`;
-    
-    alert(details);
+// function viewCustomerDetails(customerId) {
+//     const customer = customers.find(c => c.id === customerId);
+//     if (!customer) {
+//         showAlert('Customer not found!', 'danger');
+//         return;
+//     }
+
+//     const customerBookings = bookings.filter(b => b.customer_id === customerId);
+//     let details = `👤 CUSTOMER DETAILS\n\n`;
+//     details += `Name: ${customer.name}\n`;
+//     details += `Phone: ${customer.phone}\n`;
+//     details += `WhatsApp: ${customer.whatsapp}\n`;
+//     details += `Email: ${customer.email}\n`;
+//     details += `Address: ${customer.address}\n`;
+//     details += `City: ${customer.city}, ${customer.state}\n`;
+//     details += `Type: ${customer.customer_type}\n`;
+//     details += `Total Bookings: ${customerBookings.length}\n`;
+//     details += `WhatsApp Marketing: ${customer.whatsapp_marketing ? 'Enabled' : 'Disabled'}\n`;
+//     details += `Birthday Offers: ${customer.birthday_offers ? 'Enabled' : 'Disabled'}\n`;
+
+//     alert(details);
+// }
+
+function openEditCustomerForm(customer) {
+    // Switch to the add-customer section
+    showSection('add-customer');
+
+    // Wait a moment for the form to load, then populate it
+    setTimeout(() => {
+        const form = document.getElementById('customer-form');
+        if (!form) {
+            console.error('Customer form not found');
+            return;
+        }
+
+        // Pre-fill all form fields with customer data
+        const fields = [
+            { name: 'name', value: customer.name },
+            { name: 'age', value: customer.age || '' },
+            { name: 'gender', value: customer.gender || '' },
+            { name: 'dob', value: customer.dob || '' },
+            { name: 'customer_type', value: customer.customer_type || 'Regular' },
+            { name: 'phone', value: customer.phone },
+            { name: 'whatsapp', value: customer.whatsapp },
+            { name: 'email', value: customer.email },
+            { name: 'id_type', value: customer.id_type },
+            { name: 'address', value: customer.address },
+            { name: 'city', value: customer.city },
+            { name: 'state', value: customer.state },
+            { name: 'pincode', value: customer.pincode },
+        ];
+
+        fields.forEach(field => {
+            const element = form.querySelector(`[name="${field.name}"]`);
+            if (element) {
+                element.value = field.value;
+            }
+        });
+
+        // Handle checkboxes
+        const whatsappMarketing = form.querySelector('[name="whatsapp_marketing"]');
+        if (whatsappMarketing) {
+            whatsappMarketing.checked = customer.whatsapp_marketing || false;
+        }
+
+        const birthdayOffers = form.querySelector('[name="birthday_offers"]');
+        if (birthdayOffers) {
+            birthdayOffers.checked = customer.birthday_offers || false;
+        }
+
+        // Show existing ID photo if available
+       if (customer.idPhoto1) {
+  document.getElementById('id-photo-preview1').innerHTML =
+    `<img src="${customer.idPhoto1}" alt="ID Photo 1"
+      style="max-width: 100%; max-height: 150px; object-fit: contain; border-radius: 5px;">`;
 }
+if (customer.idPhoto2) {
+  document.getElementById('id-photo-preview2').innerHTML =
+    `<img src="${customer.idPhoto2}" alt="ID Photo 2"
+      style="max-width: 100%; max-height: 150px; object-fit: contain; border-radius: 5px;">`;
+}
+
+
+
+        // Change form behavior to update instead of create
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.innerHTML = '<i class="fas fa-save me-2"></i>Update Customer';
+        }
+
+        // Change form submission to update function
+        form.onsubmit = function (e) {
+            e.preventDefault();
+            updateExistingCustomer(customer.id);
+        };
+
+        // Show alert that we're editing
+        showAlert(`Editing customer: ${customer.name}`, 'info', 3000);
+
+    }, 100);
+}
+
+function updateExistingCustomer(customerId) {
+    try {
+        const form = document.getElementById('customer-form');
+        const formData = new FormData(form);
+
+        // Find the customer to update
+        const customerIndex = customers.findIndex(c => c.id === customerId);
+        if (customerIndex === -1) {
+            showAlert('Customer not found!', 'danger');
+            return;
+        }
+
+        // Validate required fields
+        const requiredFields = ['name', 'phone', 'email', 'id_type', 'address', 'city', 'state', 'pincode'];
+        const missingFields = requiredFields.filter(field => !formData.get(field)?.trim());
+
+        if (missingFields.length > 0) {
+            showAlert(`Please fill all required fields: ${missingFields.join(', ')}`, 'danger');
+            return;
+        }
+
+        // Check for ID photo (use existing if no new photo uploaded)
+        const photoInput = document.getElementById('customer-id-photo');
+        let idPhotoData = customers[customerIndex].idPhoto; // Keep existing photo
+
+        if (photoInput && photoInput.files && photoInput.files[0]) {
+            // New photo uploaded, read it
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                idPhotoData = e.target.result;
+                saveUpdatedCustomer();
+            };
+            reader.readAsDataURL(photoInput.files[0]);
+        } else {
+            // No new photo, save with existing data
+            saveUpdatedCustomer();
+        }
+
+        function saveUpdatedCustomer() {
+            // Update customer object
+            customers[customerIndex] = {
+                ...customers[customerIndex], // Keep existing properties
+                name: formData.get('name').trim(),
+                age: parseInt(formData.get('age')) || null,
+                gender: formData.get('gender') || '',
+                dob: formData.get('dob') || '',
+                customer_type: formData.get('customer_type') || 'Regular',
+                phone: formData.get('phone').trim(),
+                whatsapp: formData.get('whatsapp')?.trim() || formData.get('phone').trim(),
+                email: formData.get('email').trim(),
+                id_type: formData.get('id_type'),
+                idPhoto: idPhotoData,
+                address: formData.get('address').trim(),
+                city: formData.get('city').trim(),
+                state: formData.get('state').trim(),
+                pincode: formData.get('pincode').trim(),
+                whatsapp_marketing: formData.get('whatsapp_marketing') === 'on',
+                birthday_offers: formData.get('birthday_offers') === 'on',
+                last_updated: new Date().toISOString()
+            };
+
+            saveToLocalStorage();
+            showAlert(`✅ Customer "${customers[customerIndex].name}" updated successfully!`, 'success', 4000);
+
+            // Reset form back to add mode
+            resetFormToAddMode();
+            updateDashboard();
+        }
+
+    } catch (error) {
+        console.error('❌ Error updating customer:', error);
+        showAlert('❌ Error updating customer. Please try again.', 'danger');
+    }
+}
+
+function resetFormToAddMode() {
+    const form = document.getElementById('customer-form');
+    if (!form) return;
+
+    // Reset form
+    form.reset();
+
+    // Reset submit button
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+        submitBtn.innerHTML = '<i class="fas fa-save me-2"></i>Add Customer';
+    }
+
+    // Reset form submission
+    form.onsubmit = function (e) {
+        e.preventDefault();
+        addEnhancedCustomer();
+    };
+
+    // Reset photo preview
+    const preview = document.getElementById('id-photo-preview');
+    if (preview) {
+        preview.innerHTML = '<i class="fas fa-id-card fa-3x text-muted"></i><p class="text-muted mb-0">No photo selected</p>';
+    }
+}
+
+
+// function showCustomerDetails(customerId) {
+//     const customer = customers.find(c => c.id === customerId);
+//     if (!customer) {
+//         showAlert('Customer not found!', 'danger');
+//         return;
+//     }
+
+//     const modalBody = document.getElementById('customerDetailsModalBody');
+//     modalBody.innerHTML = `
+//     <div class="row">
+//       <div class="col-md-4 d-flex justify-content-center align-items-center mb-3">
+//         <img src="${customer.idPhoto1 || 'default-img.png'}" alt="ID Photo"
+//      style="max-width: 150px; max-height: 150px; object-fit: contain; border-radius: 5px;">
+
+// <img src="${customer.idPhoto2|| 'default-img.png'}" alt="ID Photo"
+//      style="max-width: 150px; max-height: 150px; object-fit: contain; border-radius: 5px;">
+
+
+//       </div>
+//       <div class="col-md-8">
+//         <p><strong>Name:</strong> ${customer.name}</p>
+//         <p><strong>Phone:</strong> ${customer.phone}</p>
+//         <p><strong>WhatsApp:</strong> ${customer.whatsapp}</p>
+//         <p><strong>Email:</strong> ${customer.email}</p>
+//         <p><strong>Address:</strong> ${customer.address}</p>
+//         <p><strong>City:</strong> ${customer.city}</p>
+//         <p><strong>State:</strong> ${customer.state}</p>
+//         <p><strong>Pincode:</strong> ${customer.pincode}</p>
+//         <p><strong>Customer Type:</strong> ${customer.customer_type}</p>
+//         <p><strong>ID Type:</strong> ${customer.id_type}</p>
+//         <!-- Add other customer info here -->
+//       </div>
+//     </div>
+//   `;
+
+//     const modal = new bootstrap.Modal(document.getElementById('customerDetailsModal'));
+//     modal.show();
+
+//     document.getElementById('editCustomerBtn').onclick = function () {
+//         modal.hide();
+//         openEditCustomerForm(customer);
+//     };
+// }
+
+function showCustomerDetails(customerId) {
+  const customer = customers.find(c => c.id === customerId);
+  if (!customer) {
+    showAlert('Customer not found!', 'danger');
+    return;
+  }
+
+  const modalBody = document.getElementById('customerDetailsModalBody');
+  modalBody.innerHTML = `
+    <div class="row">
+      <div class="col-md-4">
+        <div style="margin-bottom: 10px;">
+          <img src="${customer.idPhoto1 || 'default-img.png'}" alt="ID Photo Front"
+            style="max-width: 100%; max-height: 150px; object-fit: contain; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 10px;">
+          <img src="${customer.idPhoto2 || 'default-img.png'}" alt="ID Photo Back"
+            style="max-width: 100%; max-height: 150px; object-fit: contain; border-radius: 5px;">
+        </div>
+      </div>
+      <div class="col-md-8">
+        <p><strong>Name:</strong> ${customer.name}</p>
+        <p><strong>Phone:</strong> ${customer.phone}</p>
+        <p><strong>WhatsApp:</strong> ${customer.whatsapp}</p>
+        <p><strong>Email:</strong> ${customer.email}</p>
+        <p><strong>Address:</strong> ${customer.address}</p>
+        <p><strong>City:</strong> ${customer.city}</p>
+        <p><strong>State:</strong> ${customer.state}</p>
+        <p><strong>Pincode:</strong> ${customer.pincode}</p>
+        <p><strong>Customer Type:</strong> ${customer.customer_type}</p>
+        <p><strong>ID Type:</strong> ${customer.id_type}</p>
+        <!-- Add other customer info here -->
+      </div>
+    </div>
+  `;
+
+  const modal = new bootstrap.Modal(document.getElementById('customerDetailsModal'));
+  modal.show();
+
+  document.getElementById('editCustomerBtn').onclick = function () {
+    modal.hide();
+    openEditCustomerForm(customer);
+  };
+}
+
 
 function createBookingForCustomer(customerId) {
     showSection('new-booking');
@@ -1302,7 +2049,7 @@ function loadRoomStatus() {
         console.error('room-status-grid not found in HTML');
         return;
     }
-    
+
     try {
         if (rooms.length === 0) {
             roomStatusDiv.innerHTML = `
@@ -1317,14 +2064,14 @@ function loadRoomStatus() {
             `;
             return;
         }
-        
+
         // Group rooms by floor
         const floors = {
             1: rooms.filter(r => Math.floor(r.room_number / 100) === 1),
             2: rooms.filter(r => Math.floor(r.room_number / 100) === 2),
             3: rooms.filter(r => Math.floor(r.room_number / 100) === 3)
         };
-        
+
         let html = `
             <!-- Room Status Summary -->
             <div class="row mb-4">
@@ -1354,7 +2101,7 @@ function loadRoomStatus() {
                 </div>
             </div>
         `;
-        
+
         // Display rooms by floor
         Object.keys(floors).forEach(floor => {
             if (floors[floor].length > 0) {
@@ -1363,19 +2110,19 @@ function loadRoomStatus() {
                         <h5><i class="fas fa-building me-2"></i>Floor ${floor} (${floors[floor].length} rooms)</h5>
                         <div class="row g-3">
                 `;
-                
+
                 floors[floor].forEach(room => {
-                    const statusClass = room.status === 'Vacant' ? 'success' : 
-                                      room.status === 'Occupied' ? 'danger' : 'warning';
-                    const statusIcon = room.status === 'Vacant' ? 'door-open' : 
-                                     room.status === 'Occupied' ? 'door-closed' : 'tools';
-                    
+                    const statusClass = room.status === 'Vacant' ? 'success' :
+                        room.status === 'Occupied' ? 'danger' : 'warning';
+                    const statusIcon = room.status === 'Vacant' ? 'door-open' :
+                        room.status === 'Occupied' ? 'door-closed' : 'tools';
+
                     // Find current booking if occupied
-                    const currentBooking = bookings.find(b => 
-                        b.room_id === room.id && 
+                    const currentBooking = bookings.find(b =>
+                        b.room_id === room.id &&
                         (b.payment_status === 'Pending' || b.payment_status === 'Paid' || b.payment_status === 'Partial')
                     );
-                    
+
                     let occupancyInfo = '';
                     if (currentBooking && room.status === 'Occupied') {
                         const customer = customers.find(c => c.id === currentBooking.customer_id);
@@ -1402,7 +2149,7 @@ function loadRoomStatus() {
                             `;
                         }
                     }
-                    
+
                     html += `
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                             <div class="card room-card border-${statusClass} h-100 shadow-sm">
@@ -1443,14 +2190,14 @@ function loadRoomStatus() {
                         </div>
                     `;
                 });
-                
+
                 html += '</div></div>';
             }
         });
-        
+
         roomStatusDiv.innerHTML = html;
         console.log('✅ Room status loaded successfully');
-        
+
     } catch (error) {
         console.error('❌ Error loading room status:', error);
         roomStatusDiv.innerHTML = `
@@ -1470,18 +2217,18 @@ function loadRoomStatus() {
 
 function loadRoomManagement() {
     console.log('🔄 Loading Room Management...');
-    
+
     const roomManagementDiv = document.getElementById('room-management-grid');
     if (!roomManagementDiv) {
         console.error('❌ room-management-grid section not found in HTML');
         showAlert('Room Management section not found in HTML.\n\nPlease check your page structure.', 'danger');
         return;
     }
-    
+
     try {
         // Update room counts first
         updateRoomCounts();
-        
+
         // Check if we have rooms
         if (rooms.length === 0) {
             roomManagementDiv.innerHTML = `
@@ -1503,21 +2250,21 @@ function loadRoomManagement() {
             `;
             return;
         }
-        
+
         // Calculate room statistics
         const totalRooms = rooms.length;
         const vacantRooms = rooms.filter(r => r.status === 'Vacant').length;
         const occupiedRooms = rooms.filter(r => r.status === 'Occupied').length;
         const maintenanceRooms = rooms.filter(r => r.status === 'Under Maintenance').length;
         const occupancyRate = Math.round((occupiedRooms / totalRooms) * 100);
-        
+
         // Group rooms by floor
         const floorRooms = {
             1: rooms.filter(r => Math.floor(r.room_number / 100) === 1),
             2: rooms.filter(r => Math.floor(r.room_number / 100) === 2),
             3: rooms.filter(r => Math.floor(r.room_number / 100) === 3)
         };
-        
+
         roomManagementDiv.innerHTML = `
             <div class="container-fluid">
                 <!-- Room Statistics -->
@@ -1640,9 +2387,9 @@ function loadRoomManagement() {
                 </div>
             </div>
         `;
-        
+
         console.log('✅ Room Management loaded successfully');
-        
+
     } catch (error) {
         console.error('❌ Error loading Room Management:', error);
         roomManagementDiv.innerHTML = `
@@ -1658,7 +2405,7 @@ function loadRoomManagement() {
 // Generate floor rooms HTML
 function generateFloorRooms(floorRooms) {
     let html = '';
-    
+
     Object.keys(floorRooms).forEach(floor => {
         if (floorRooms[floor].length > 0) {
             html += `
@@ -1677,27 +2424,27 @@ function generateFloorRooms(floorRooms) {
             `;
         }
     });
-    
+
     return html;
 }
 
 // Generate room cards
 function generateRoomCards(roomsArray) {
     let html = '';
-    
+
     roomsArray.forEach(room => {
-        const statusClass = room.status === 'Vacant' ? 'success' : 
-                           room.status === 'Occupied' ? 'danger' : 'warning';
-        
-        const statusIcon = room.status === 'Vacant' ? 'door-open' : 
-                          room.status === 'Occupied' ? 'door-closed' : 'tools';
-        
+        const statusClass = room.status === 'Vacant' ? 'success' :
+            room.status === 'Occupied' ? 'danger' : 'warning';
+
+        const statusIcon = room.status === 'Vacant' ? 'door-open' :
+            room.status === 'Occupied' ? 'door-closed' : 'tools';
+
         // Find current booking if occupied
-        const currentBooking = bookings.find(b => 
-            b.room_id === room.id && 
+        const currentBooking = bookings.find(b =>
+            b.room_id === room.id &&
             (b.payment_status === 'Pending' || b.payment_status === 'Paid' || b.payment_status === 'Partial')
         );
-        
+
         let occupancyInfo = '';
         if (currentBooking) {
             const customer = customers.find(c => c.id === currentBooking.customer_id);
@@ -1712,7 +2459,7 @@ function generateRoomCards(roomsArray) {
                 </div>
             `;
         }
-        
+
         html += `
             <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                 <div class="card room-card border-${statusClass} h-100" onclick="viewRoomDetails(${room.id})">
@@ -1744,7 +2491,7 @@ function generateRoomCards(roomsArray) {
             </div>
         `;
     });
-    
+
     return html;
 }
 
@@ -1755,12 +2502,12 @@ function updateRoomCounts() {
         const vacantRooms = rooms.filter(r => r.status === 'Vacant').length;
         const occupiedRooms = rooms.filter(r => r.status === 'Occupied').length;
         const maintenanceRooms = rooms.filter(r => r.status === 'Under Maintenance').length;
-        
+
         updateElement('total-rooms-count', totalRooms);
         updateElement('available-rooms-count', vacantRooms);
         updateElement('occupied-rooms-count', occupiedRooms);
         updateElement('maintenance-rooms-count', maintenanceRooms);
-        
+
     } catch (error) {
         console.error('Error updating room counts:', error);
     }
@@ -1775,21 +2522,21 @@ function showAllRooms() {
 // Filter rooms by status
 function filterRooms(status) {
     console.log(`Filtering rooms by status: ${status}`);
-    
+
     const filteredRooms = rooms.filter(room => room.status === status);
-    
+
     if (filteredRooms.length === 0) {
         showAlert(`No rooms with status: ${status}`, 'info');
         return;
     }
-    
+
     // Group filtered rooms by floor
     const floorRooms = {
         1: filteredRooms.filter(r => Math.floor(r.room_number / 100) === 1),
         2: filteredRooms.filter(r => Math.floor(r.room_number / 100) === 2),
         3: filteredRooms.filter(r => Math.floor(r.room_number / 100) === 3)
     };
-    
+
     const roomManagementDiv = document.getElementById('room-management-grid');
     if (roomManagementDiv) {
         roomManagementDiv.innerHTML = `
@@ -1820,13 +2567,13 @@ function quickStatusChange(roomId) {
         showAlert('Room not found!', 'danger');
         return;
     }
-    
+
     const newStatus = prompt(
         `Change Room ${room.room_number} status from "${room.status}" to:\n\n1. Vacant\n2. Occupied\n3. Under Maintenance\n\nEnter your choice (1-3):`
     );
-    
+
     let status;
-    switch(newStatus) {
+    switch (newStatus) {
         case '1':
             status = 'Vacant';
             break;
@@ -1839,7 +2586,7 @@ function quickStatusChange(roomId) {
         default:
             return;
     }
-    
+
     if (status && status !== room.status) {
         room.status = status;
         room.last_updated = new Date().toISOString();
@@ -1857,13 +2604,13 @@ function viewRoomDetails(roomId) {
         showAlert('Room not found!', 'danger');
         return;
     }
-    
+
     // Find current booking if occupied
-    const currentBooking = bookings.find(b => 
-        b.room_id === roomId && 
+    const currentBooking = bookings.find(b =>
+        b.room_id === roomId &&
         (b.payment_status === 'Pending' || b.payment_status === 'Paid' || b.payment_status === 'Partial')
     );
-    
+
     let details = `🏨 ROOM DETAILS - ${room.room_number}\n\n`;
     details += `📋 ROOM INFORMATION\n`;
     details += `Room Number: ${room.room_number}\n`;
@@ -1873,7 +2620,7 @@ function viewRoomDetails(roomId) {
     details += `Floor: ${room.floor || Math.floor(room.room_number / 100)}\n`;
     details += `Capacity: ${room.capacity || 2} guests\n`;
     details += `Amenities: ${room.amenities || 'AC, WiFi, TV, Bathroom'}\n\n`;
-    
+
     if (currentBooking) {
         const customer = customers.find(c => c.id === currentBooking.customer_id);
         details += `👤 CURRENT OCCUPANCY\n`;
@@ -1888,11 +2635,11 @@ function viewRoomDetails(roomId) {
         details += `📊 STATUS\n`;
         details += `Currently ${room.status.toLowerCase()} and available for booking.\n`;
     }
-    
+
     details += `\n🕐 SYSTEM INFO\n`;
     details += `Room ID: ${room.id}\n`;
     details += `Last Updated: ${room.last_updated ? new Date(room.last_updated).toLocaleString() : 'Never'}`;
-    
+
     alert(details);
 }
 
@@ -1903,14 +2650,14 @@ function createBookingForRoom(roomId) {
         showAlert('Room not found!', 'danger');
         return;
     }
-    
+
     if (room.status !== 'Vacant') {
         showAlert(`Room ${room.room_number} is not available for booking.\nCurrent status: ${room.status}`, 'warning');
         return;
     }
-    
+
     showSection('new-booking');
-    
+
     // Pre-select the room in booking form
     setTimeout(() => {
         const roomSelect = document.getElementById('booking-room');
@@ -1928,15 +2675,15 @@ function bulkStatusChange() {
     const roomNumbers = prompt(
         'Bulk Status Change\n\nEnter room numbers separated by commas (e.g., 101,102,103):'
     );
-    
+
     if (!roomNumbers) return;
-    
+
     const newStatus = prompt(
         'Change selected rooms to:\n\n1. Vacant\n2. Occupied\n3. Under Maintenance\n\nEnter your choice (1-3):'
     );
-    
+
     let status;
-    switch(newStatus) {
+    switch (newStatus) {
         case '1':
             status = 'Vacant';
             break;
@@ -1949,10 +2696,10 @@ function bulkStatusChange() {
         default:
             return;
     }
-    
+
     const roomNumbersArray = roomNumbers.split(',').map(num => parseInt(num.trim()));
     let changedRooms = 0;
-    
+
     roomNumbersArray.forEach(roomNumber => {
         const room = rooms.find(r => r.room_number === roomNumber);
         if (room && room.status !== status) {
@@ -1961,7 +2708,7 @@ function bulkStatusChange() {
             changedRooms++;
         }
     });
-    
+
     if (changedRooms > 0) {
         saveToLocalStorage();
         showAlert(`✅ Status changed for ${changedRooms} rooms to "${status}"`, 'success');
@@ -1977,33 +2724,33 @@ function updateAllPrices() {
     const priceChange = prompt(
         'Update Room Prices\n\nEnter price change:\n- Enter amount to increase (e.g., 500)\n- Enter negative to decrease (e.g., -200)\n- Enter percentage (e.g., 10%)\n\nPrice change:'
     );
-    
+
     if (!priceChange) return;
-    
+
     let isPercentage = priceChange.includes('%');
     let changeValue = parseFloat(priceChange.replace('%', ''));
-    
+
     if (isNaN(changeValue)) {
         showAlert('Invalid price change value', 'danger');
         return;
     }
-    
+
     let updatedRooms = 0;
-    
+
     rooms.forEach(room => {
         const oldPrice = room.price;
-        
+
         if (isPercentage) {
             room.price = Math.round(oldPrice * (1 + changeValue / 100));
         } else {
             room.price = oldPrice + changeValue;
         }
-        
+
         if (room.price < 0) room.price = 500; // Minimum price
         room.last_updated = new Date().toISOString();
         updatedRooms++;
     });
-    
+
     saveToLocalStorage();
     showAlert(`✅ Prices updated for ${updatedRooms} rooms\n${isPercentage ? changeValue + '%' : '₹' + changeValue} ${changeValue >= 0 ? 'increase' : 'decrease'}`, 'success');
     loadRoomManagement();
@@ -2016,7 +2763,7 @@ function generateRoomReport() {
     const occupiedRooms = rooms.filter(r => r.status === 'Occupied').length;
     const maintenanceRooms = rooms.filter(r => r.status === 'Under Maintenance').length;
     const occupancyRate = Math.round((occupiedRooms / totalRooms) * 100);
-    
+
     const averagePrice = Math.round(rooms.reduce((sum, room) => sum + room.price, 0) / totalRooms);
     const totalRevenue = rooms.reduce((sum, room) => {
         if (room.status === 'Occupied') {
@@ -2024,21 +2771,21 @@ function generateRoomReport() {
         }
         return sum;
     }, 0);
-    
+
     let report = `📊 ROOM MANAGEMENT REPORT\n`;
     report += `${new Date().toLocaleString()}\n\n`;
-    
+
     report += `🏨 ROOM STATISTICS\n`;
     report += `Total Rooms: ${totalRooms}\n`;
-    report += `Available: ${vacantRooms} (${Math.round((vacantRooms/totalRooms)*100)}%)\n`;
+    report += `Available: ${vacantRooms} (${Math.round((vacantRooms / totalRooms) * 100)}%)\n`;
     report += `Occupied: ${occupiedRooms} (${occupancyRate}%)\n`;
-    report += `Maintenance: ${maintenanceRooms} (${Math.round((maintenanceRooms/totalRooms)*100)}%)\n\n`;
-    
+    report += `Maintenance: ${maintenanceRooms} (${Math.round((maintenanceRooms / totalRooms) * 100)}%)\n\n`;
+
     report += `💰 FINANCIAL OVERVIEW\n`;
     report += `Average Room Price: ${formatCurrency(averagePrice)}\n`;
     report += `Daily Revenue (Occupied): ${formatCurrency(totalRevenue)}\n`;
     report += `Potential Revenue (Full): ${formatCurrency(totalRooms * averagePrice)}\n\n`;
-    
+
     report += `📋 ROOM TYPES\n`;
     const roomTypes = {};
     rooms.forEach(room => {
@@ -2047,11 +2794,11 @@ function generateRoomReport() {
         }
         roomTypes[room.type].count++;
     });
-    
+
     Object.keys(roomTypes).forEach(type => {
         report += `${type}: ${roomTypes[type].count} rooms @ ${formatCurrency(roomTypes[type].price)}\n`;
     });
-    
+
     alert(report);
 }
 
@@ -2059,24 +2806,24 @@ function generateRoomReport() {
 function exportRoomData() {
     try {
         let csvContent = "Room Number,Type,Price,Status,Floor,Capacity,Current Guest,Phone,Check-out Date\n";
-        
+
         rooms.forEach(room => {
-            const currentBooking = bookings.find(b => 
-                b.room_id === room.id && 
+            const currentBooking = bookings.find(b =>
+                b.room_id === room.id &&
                 (b.payment_status === 'Pending' || b.payment_status === 'Paid' || b.payment_status === 'Partial')
             );
-            
+
             let guestName = 'N/A';
             let guestPhone = 'N/A';
             let checkoutDate = 'N/A';
-            
+
             if (currentBooking) {
                 const customer = customers.find(c => c.id === currentBooking.customer_id);
                 guestName = customer ? customer.name : 'Unknown';
                 guestPhone = customer ? customer.phone : 'N/A';
                 checkoutDate = new Date(currentBooking.checkout_time).toLocaleDateString();
             }
-            
+
             const row = [
                 room.room_number,
                 room.type,
@@ -2088,10 +2835,10 @@ function exportRoomData() {
                 guestPhone,
                 checkoutDate
             ].map(field => `"${field}"`).join(',');
-            
+
             csvContent += row + "\n";
         });
-        
+
         // Create and download CSV file
         const blob = new Blob([csvContent], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
@@ -2102,9 +2849,9 @@ function exportRoomData() {
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
-        
+
         showAlert('✅ Room data exported successfully!', 'success');
-        
+
     } catch (error) {
         console.error('Error exporting room data:', error);
         showAlert('Error exporting room data', 'danger');
@@ -2119,12 +2866,12 @@ function viewRoomDetails(roomId) {
         showAlert('Room not found!', 'danger');
         return;
     }
-    
-    const currentBooking = bookings.find(b => 
-        b.room_id === roomId && 
+
+    const currentBooking = bookings.find(b =>
+        b.room_id === roomId &&
         (b.payment_status === 'Pending' || b.payment_status === 'Paid' || b.payment_status === 'Partial')
     );
-    
+
     let details = `🏨 ROOM DETAILS - Room ${room.room_number}\n\n`;
     details += `🏠 ROOM INFO:\n`;
     details += `• Room Number: ${room.room_number}\n`;
@@ -2133,7 +2880,7 @@ function viewRoomDetails(roomId) {
     details += `• Price: ${formatCurrency(room.price)} per day\n`;
     details += `• Capacity: ${room.capacity || 2} guests\n`;
     details += `• Status: ${room.status}\n\n`;
-    
+
     if (currentBooking) {
         const customer = customers.find(c => c.id === currentBooking.customer_id);
         details += `👥 CURRENT OCCUPANCY:\n`;
@@ -2149,7 +2896,7 @@ function viewRoomDetails(roomId) {
         details += `✅ AVAILABILITY:\n`;
         details += `Currently ${room.status.toLowerCase()} and ${room.status === 'Vacant' ? 'available for booking' : 'not available'}.`;
     }
-    
+
     alert(details);
 }
 
@@ -2161,9 +2908,9 @@ function quickStatusChange(roomId) {
     }
 
     const choice = prompt(`Change Room ${room.room_number} status from "${room.status}" to:\n\n1. Vacant\n2. Occupied\n3. Under Maintenance\n\nEnter your choice (1-3):`);
-    
+
     let newStatus = '';
-    switch(choice) {
+    switch (choice) {
         case '1':
             newStatus = 'Vacant';
             break;
@@ -2176,7 +2923,7 @@ function quickStatusChange(roomId) {
         default:
             return;
     }
-    
+
     if (newStatus && newStatus !== room.status) {
         room.status = newStatus;
         saveToLocalStorage();
@@ -2192,12 +2939,12 @@ function quickBookRoom(roomId) {
         showAlert('Room not found!', 'danger');
         return;
     }
-    
+
     if (room.status !== 'Vacant') {
         showAlert(`Room ${room.room_number} is not available for booking (Status: ${room.status})`, 'warning');
         return;
     }
-    
+
     if (confirm(`📋 Quick Book Room ${room.room_number}?\n\nRoom Type: ${room.type}\nPrice: ${formatCurrency(room.price)} per day\n\nThis will redirect you to the booking form.`)) {
         showSection('new-booking');
     }
@@ -2206,21 +2953,41 @@ function quickBookRoom(roomId) {
 // ==================== BOOKING SYSTEM (FIXED) ====================
 function loadNewBookingWithGuests() {
     console.log('🔄 Loading new booking form...');
-    
+
     const newBookingDiv = document.getElementById('new-booking');
     if (!newBookingDiv) {
         console.error('new-booking section not found in HTML');
         showAlert('New Booking section not found in HTML. Please check your page structure.', 'danger');
         return;
     }
-    
+
     try {
         // Set default dates
+        // const now = new Date();
+        // const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+        // const defaultCheckin = now.toISOString().slice(0, 16);
+        // const defaultCheckout = tomorrow.toISOString().slice(0, 16);
+
+        function toLocalISOString(date) {
+            const offset = date.getTimezoneOffset() * 60000; // adjust UTC → local
+            return new Date(date - offset).toISOString().slice(0, 16);
+        }
+
         const now = new Date();
+
+        // ✅ Check-in = current time (local)
+        const defaultCheckin = toLocalISOString(now);
+
+        // ✅ Checkout = tomorrow at 11:00 AM (local)
         const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-        const defaultCheckin = now.toISOString().slice(0, 16);
-        const defaultCheckout = tomorrow.toISOString().slice(0, 16);
-        
+        tomorrow.setHours(11, 0, 0, 0); // force time to 11:00 AM (hh, mm, ss, ms)
+
+        const defaultCheckout = toLocalISOString(tomorrow);
+
+        console.log("Check-in:", defaultCheckin);
+        console.log("Checkout:", defaultCheckout);
+
+
         newBookingDiv.innerHTML = `
             <div class="container-fluid">
                 <div class="card shadow-sm">
@@ -2248,9 +3015,9 @@ function loadNewBookingWithGuests() {
                                     <label class="form-label fw-semibold">Select Customer *</label>
                                     <select class="form-select form-select-lg" id="booking-customer" onchange="updatePrimaryGuestInfo()" required>
                                         <option value="">Choose Customer...</option>
-                                        ${customers.map(customer => 
-                                            `<option value="${customer.id}">${customer.name} - ${customer.phone} (${customer.customer_type})</option>`
-                                        ).join('')}
+                                        ${customers.map(customer =>
+            `<option value="${customer.id}">${customer.name} - ${customer.phone} (${customer.customer_type})</option>`
+        ).join('')}
                                     </select>
                                     <small class="text-muted">
                                         Don't see the customer? 
@@ -2261,9 +3028,9 @@ function loadNewBookingWithGuests() {
                                     <label class="form-label fw-semibold">Select Room *</label>
                                     <select class="form-select form-select-lg" id="booking-room" onchange="calculateBookingTotal()" required>
                                         <option value="">Choose Room...</option>
-                                        ${rooms.filter(room => room.status === 'Vacant').map(room => 
-                                            `<option value="${room.id}">Room ${room.room_number} - ${room.type} (${formatCurrency(room.price)}/day)</option>`
-                                        ).join('')}
+                                        ${rooms.filter(room => room.status === 'Vacant').map(room =>
+            `<option value="${room.id}">Room ${room.room_number} - ${room.type} (${formatCurrency(room.price)}/day)</option>`
+        ).join('')}
                                     </select>
                                     <small class="text-muted">Only vacant rooms are shown</small>
                                 </div>
@@ -2378,14 +3145,14 @@ function loadNewBookingWithGuests() {
                 </div>
             </div>
         `;
-        
+
         // Initialize guest count after HTML is loaded
         setTimeout(() => {
             updateGuestCount();
         }, 100);
-        
+
         console.log('✅ New booking form loaded successfully');
-        
+
     } catch (error) {
         console.error('❌ Error loading new booking form:', error);
         newBookingDiv.innerHTML = `
@@ -2400,25 +3167,27 @@ function loadNewBookingWithGuests() {
 
 function updatePrimaryGuestInfo() {
     console.log('🔄 Updating primary guest info...');
-    
+
     const customerId = document.getElementById('booking-customer')?.value;
     if (!customerId) {
         console.log('No customer selected');
         return;
     }
-    
+
     const customer = customers.find(c => c.id == customerId);
     if (!customer) {
         console.log('Customer not found:', customerId);
         return;
     }
-    
+
     console.log('Found customer:', customer.name);
-    
+
     // Update primary guest fields
     const primaryNameField = document.querySelector('input[name="guest_name_1"]');
     const primaryPhoneField = document.querySelector('input[name="guest_phone_1"]');
-    
+    const primaryAgeField = document.querySelector('input[name="guest_age_1"]');
+    const primaryGenderField = document.querySelector('input[name="guest_gender_1"]');
+
     if (primaryNameField) {
         primaryNameField.value = customer.name;
         console.log('Updated primary guest name');
@@ -2427,24 +3196,108 @@ function updatePrimaryGuestInfo() {
         primaryPhoneField.value = customer.phone;
         console.log('Updated primary guest phone');
     }
-    
+    if (primaryAgeField) {
+        primaryAgeField.value = customer.age;
+        console.log('Updated primary guest age');
+    }
+    if (primaryGenderField) {
+        primaryGenderField.value = customer.gender;
+        console.log('Updated primary guest gender');
+    }
+
     // Also trigger calculation
     calculateBookingTotal();
 }
 
+// function updateGuestCount() {
+//     const guestCount = parseInt(document.getElementById('guest-count')?.value || 2);
+//     const guestListDiv = document.getElementById('guest-list');
+
+//     if (!guestListDiv) {
+//         console.error('guest-list div not found');
+//         return;
+//     }
+
+//     console.log(`🔄 Updating guest count to: ${guestCount}`);
+
+//     guestListDiv.innerHTML = '';
+
+//     for (let i = 1; i <= guestCount; i++) {
+//         const isPrimary = i === 1;
+//         const guestHtml = `
+//             <div class="card mb-3 ${isPrimary ? 'border-primary' : 'border-info'}">
+//                 <div class="card-header ${isPrimary ? 'bg-primary text-white' : 'bg-info text-white'}">
+//                     <h6 class="mb-0">
+//                         <i class="fas fa-user me-2"></i>
+//                         Guest ${i} ${isPrimary ? '(Primary - Booking Holder)' : ''}
+//                     </h6>
+//                 </div>
+//                 <div class="card-body">
+//                     <div class="row">
+//                         <div class="col-md-6 mb-3">
+//                             <label class="form-label">Full Name *</label>
+//                             <input type="text" class="form-control" name="guest_name_${i}"
+//                                    ${isPrimary ? 'readonly style="background-color: #e9ecef; font-weight: bold;"' : ''} 
+//                                    placeholder="${isPrimary ? 'Will auto-fill when customer selected' : 'Enter guest name'}" required>
+//                         </div>
+//                         <div class="col-md-3 mb-3">
+//                             <label class="form-label">Age *</label>
+//                             <input type="number" class="form-control" name="guest_age_${i}" 
+//                                    ${isPrimary ? 'readonly style="background-color: #e9ecef; font-weight: bold;"' : ''} 
+//                                    placeholder="${isPrimary ? 'Will auto-fill' : 'Enter guest age'}" required>
+//                         </div>
+//                         <div class="col-md-3 mb-3">
+//                             <label class="form-label">Gender *</label>
+//                             <input type="gender" class="form-control" name="guest_gender_${i}" 
+//                                    ${isPrimary ? 'readonly style="background-color: #e9ecef; font-weight: bold;"' : ''} 
+//                                    placeholder="${isPrimary ? 'Will auto-fill' : 'Enter guest gender'}" required>
+//                         </div>
+//                         <div class="col-md-6 mb-3">
+//                             <label class="form-label">Phone Number ${isPrimary ? '(Auto-filled)' : ''}</label>
+//                             <input type="tel" class="form-control" name="guest_phone_${i}" 
+//                                    ${isPrimary ? 'readonly style="background-color: #e9ecef;"' : ''} 
+//                                    placeholder="${isPrimary ? 'Will auto-fill' : 'Guest contact number'}">
+//                         </div>
+//                         <div class="col-md-6 mb-3">
+//                             <label class="form-label">Relationship to Primary Guest *</label>
+//                             <select class="form-select" name="guest_relationship_${i}" required>
+//                                 <option value="Self" ${isPrimary ? 'selected' : ''}>Self</option>
+//                                 <option value="Spouse">Spouse</option>
+//                                 <option value="Child">Child</option>
+//                                 <option value="Parent">Parent</option>
+//                                 <option value="Sibling">Sibling</option>
+//                                 <option value="Friend">Friend</option>
+//                                 <option value="Colleague">Colleague</option>
+//                                 <option value="Relative">Relative</option>
+//                                 <option value="Other">Other</option>
+//                             </select>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         `;
+//         guestListDiv.innerHTML += guestHtml;
+//     }
+
+//     // Update primary guest info if customer is already selected
+//     updatePrimaryGuestInfo();
+
+//     console.log(`✅ Generated ${guestCount} guest forms`);
+// }
+
 function updateGuestCount() {
     const guestCount = parseInt(document.getElementById('guest-count')?.value || 2);
     const guestListDiv = document.getElementById('guest-list');
-    
+
     if (!guestListDiv) {
         console.error('guest-list div not found');
         return;
     }
-    
+
     console.log(`🔄 Updating guest count to: ${guestCount}`);
-    
+
     guestListDiv.innerHTML = '';
-    
+
     for (let i = 1; i <= guestCount; i++) {
         const isPrimary = i === 1;
         const guestHtml = `
@@ -2459,29 +3312,24 @@ function updateGuestCount() {
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Full Name *</label>
-                            <input type="text" class="form-control" name="guest_name_${i}" 
-                                   ${isPrimary ? 'readonly style="background-color: #e9ecef; font-weight: bold;"' : ''} 
-                                   placeholder="${isPrimary ? 'Will auto-fill when customer selected' : 'Enter guest name'}" required>
+                            <select id="guest${i}Name" class="form-select" name="guest_name_${i}" required>
+                                <option value="" disabled selected>Select customer</option>
+                            </select>
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label">Age *</label>
                             <input type="number" class="form-control" name="guest_age_${i}" 
-                                   min="1" max="120" placeholder="Age" required>
+                                   placeholder="Will auto-fill" ${isPrimary ? 'readonly style="background-color: #e9ecef; font-weight: bold;"' : 'readonly style="background-color: #e9ecef; font-weight: bold;"'} required>
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label">Gender *</label>
-                            <select class="form-select" name="guest_gender_${i}" required>
-                                <option value="">Select</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
+                            <input type="text" class="form-control" name="guest_gender_${i}" 
+                                   placeholder="Will auto-fill" ${isPrimary ? 'readonly style="background-color: #e9ecef; font-weight: bold;"' : 'readonly style="background-color: #e9ecef; font-weight: bold;"'} required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Phone Number ${isPrimary ? '(Auto-filled)' : ''}</label>
+                            <label class="form-label">Phone Number *</label>
                             <input type="tel" class="form-control" name="guest_phone_${i}" 
-                                   ${isPrimary ? 'readonly style="background-color: #e9ecef;"' : ''} 
-                                   placeholder="${isPrimary ? 'Will auto-fill' : 'Guest contact number'}">
+                                   placeholder="Will auto-fill" ${isPrimary ? 'readonly style="background-color: #e9ecef; font-weight: bold;"' : 'readonly style="background-color: #e9ecef; font-weight: bold;"'}>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Relationship to Primary Guest *</label>
@@ -2503,12 +3351,39 @@ function updateGuestCount() {
         `;
         guestListDiv.innerHTML += guestHtml;
     }
-    
+
+    // Populate all guest name dropdowns
+    for (let i = 1; i <= guestCount; i++) {
+        const sel = document.getElementById(`guest${i}Name`);
+        if (sel) {
+            sel.innerHTML = '<option value="" disabled selected>Select customer</option>';
+            customers.forEach(cust => {
+                const opt = document.createElement('option');
+                opt.value = cust.id;
+                opt.textContent = cust.name;
+                sel.appendChild(opt);
+            });
+            // Add change event to autofill other fields
+            sel.addEventListener('change', function () {
+                const custId = parseInt(this.value);
+                const cust = customers.find(c => c.id === custId);
+                if (!cust) return;
+                const container = this.closest('.card-body');
+                if (container) {
+                    container.querySelector(`[name="guest_age_${i}"]`).value = cust.age || '';
+                    container.querySelector(`[name="guest_gender_${i}"]`).value = cust.gender || '';
+                    container.querySelector(`[name="guest_phone_${i}"]`).value = cust.phone || '';
+                }
+            });
+        }
+    }
+
     // Update primary guest info if customer is already selected
     updatePrimaryGuestInfo();
-    
+
     console.log(`✅ Generated ${guestCount} guest forms`);
 }
+
 
 function calculateBookingTotal() {
     try {
@@ -2519,9 +3394,9 @@ function calculateBookingTotal() {
         const customerId = document.getElementById('booking-customer')?.value;
         const bookingSummary = document.getElementById('booking-summary');
         const totalAmountField = document.getElementById('total-amount');
-        
+
         if (!bookingSummary) return;
-        
+
         if (!roomId || !checkinDate || !checkoutDate || !customerId) {
             bookingSummary.innerHTML = `
                 <div class="text-center text-muted py-3">
@@ -2531,14 +3406,14 @@ function calculateBookingTotal() {
             `;
             return;
         }
-        
+
         const room = rooms.find(r => r.id == roomId);
         const customer = customers.find(c => c.id == customerId);
         const checkin = new Date(checkinDate);
         const checkout = new Date(checkoutDate);
         const timeDiff = checkout - checkin;
         const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-        
+
         if (days <= 0) {
             bookingSummary.innerHTML = `
                 <div class="alert alert-danger">
@@ -2548,17 +3423,17 @@ function calculateBookingTotal() {
             `;
             return;
         }
-        
+
         if (room && customer) {
             const baseAmount = days * room.price;
             const extraGuestCharge = guestCount > 2 ? (guestCount - 2) * 500 * days : 0;
             const totalAmount = baseAmount + extraGuestCharge;
-            
+
             // Auto-fill total amount if not manually entered
             if (totalAmountField && (!totalAmountField.value || totalAmountField.value == 0)) {
                 totalAmountField.value = totalAmount;
             }
-            
+
             bookingSummary.innerHTML = `
                 <div class="row">
                     <div class="col-md-6">
@@ -2599,18 +3474,18 @@ function calculateBookingTotal() {
 function collectGuestData() {
     const guestCount = parseInt(document.getElementById('guest-count')?.value || 2);
     const guests = [];
-    
+
     for (let i = 1; i <= guestCount; i++) {
         const name = document.querySelector(`input[name="guest_name_${i}"]`)?.value?.trim();
         const age = document.querySelector(`input[name="guest_age_${i}"]`)?.value;
         const gender = document.querySelector(`select[name="guest_gender_${i}"]`)?.value;
         const phone = document.querySelector(`input[name="guest_phone_${i}"]`)?.value?.trim();
         const relationship = document.querySelector(`select[name="guest_relationship_${i}"]`)?.value;
-        
+
         if (!name || !age || !gender || !relationship) {
             throw new Error(`Please fill all required fields for Guest ${i}`);
         }
-        
+
         guests.push({
             id: i,
             name: name,
@@ -2621,13 +3496,13 @@ function collectGuestData() {
             is_primary: i === 1
         });
     }
-    
+
     return guests;
 }
 
 function submitBookingWithGuests() {
     console.log('🔄 Submitting booking with guests...');
-    
+
     try {
         const customerId = document.getElementById('booking-customer')?.value;
         const roomId = document.getElementById('booking-room')?.value;
@@ -2637,25 +3512,25 @@ function submitBookingWithGuests() {
         const advanceAmount = parseFloat(document.getElementById('advance-amount')?.value || 0);
         const bookingType = document.getElementById('booking-type')?.value;
         const guestCount = parseInt(document.getElementById('guest-count')?.value || 2);
-        
+
         console.log('Booking data:', { customerId, roomId, checkinDate, checkoutDate, totalAmount, advanceAmount, guestCount });
-        
+
         // Validate required fields
         if (!customerId || !roomId || !checkinDate || !checkoutDate || !totalAmount) {
             showAlert('❌ Please fill all required fields:\n\n• Customer\n• Room\n• Check-in date\n• Check-out date\n• Total amount', 'danger');
             return;
         }
-        
+
         if (totalAmount <= 0) {
             showAlert('❌ Total amount must be greater than 0', 'danger');
             return;
         }
-        
+
         if (advanceAmount > totalAmount) {
             showAlert('❌ Advance amount cannot be greater than total amount', 'danger');
             return;
         }
-        
+
         // Validate dates
         const checkin = new Date(checkinDate);
         const checkout = new Date(checkoutDate);
@@ -2663,11 +3538,11 @@ function submitBookingWithGuests() {
             showAlert('❌ Check-out date must be after check-in date', 'danger');
             return;
         }
-        
+
         // Collect guest data
         const guests = collectGuestData();
         console.log('Guest data collected:', guests);
-        
+
         // Create booking object
         const booking = {
             id: nextBookingId++,
@@ -2683,12 +3558,12 @@ function submitBookingWithGuests() {
             guests: guests,
             created_at: new Date().toISOString()
         };
-        
+
         console.log('Created booking:', booking);
-        
+
         // Add booking to array
         bookings.push(booking);
-        
+
         // Record advance payment if any
         if (advanceAmount > 0) {
             const payment = {
@@ -2702,29 +3577,29 @@ function submitBookingWithGuests() {
             payments.push(payment);
             console.log('Recorded advance payment:', payment);
         }
-        
+
         // Update room status to occupied
         const room = rooms.find(r => r.id == roomId);
         if (room) {
             room.status = 'Occupied';
             console.log('Updated room status to Occupied:', room.room_number);
         }
-        
+
         // Save to localStorage
         saveToLocalStorage();
-        
+
         // Get customer and room details for success message
         const customer = customers.find(c => c.id == customerId);
-        
+
         // Show success message
         const successMessage = `✅ Booking Created Successfully!\n\n🏨 BOOKING DETAILS:\n• Customer: ${customer ? customer.name : 'Unknown'}\n• Room: ${room ? room.room_number + ' - ' + room.type : 'N/A'}\n• Guests: ${guestCount} (${guests.map(g => g.name).join(', ')})\n• Duration: ${Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24))} days\n• Total Amount: ${formatCurrency(totalAmount)}\n• Advance Paid: ${formatCurrency(advanceAmount)}\n• Balance: ${formatCurrency(totalAmount - advanceAmount)}\n\n🎉 Room ${room ? room.room_number : 'N/A'} is now occupied!`;
-        
+
         showAlert(successMessage, 'success', 8000);
-        
+
         // Reset form and update dashboard
         resetBookingForm();
         updateDashboard();
-        
+
         // Ask if user wants to create another booking
         setTimeout(() => {
             if (confirm('Booking created successfully!\n\nWould you like to create another booking?')) {
@@ -2733,7 +3608,7 @@ function submitBookingWithGuests() {
                 showSection('dashboard');
             }
         }, 3000);
-        
+
     } catch (error) {
         console.error('❌ Error creating booking:', error);
         showAlert(`❌ Error creating booking: ${error.message}`, 'danger');
@@ -2742,18 +3617,18 @@ function submitBookingWithGuests() {
 
 function resetBookingForm() {
     console.log('🔄 Resetting booking form...');
-    
+
     try {
         const form = document.getElementById('booking-form');
         if (form) {
             form.reset();
         }
-        
+
         const guestListDiv = document.getElementById('guest-list');
         if (guestListDiv) {
             guestListDiv.innerHTML = '';
         }
-        
+
         const bookingSummary = document.getElementById('booking-summary');
         if (bookingSummary) {
             bookingSummary.innerHTML = `
@@ -2763,14 +3638,14 @@ function resetBookingForm() {
                 </div>
             `;
         }
-        
+
         // Reset guest count
         setTimeout(() => {
             updateGuestCount();
         }, 100);
-        
+
         console.log('✅ Booking form reset successfully');
-        
+
     } catch (error) {
         console.error('Error resetting booking form:', error);
     }
@@ -2784,14 +3659,14 @@ function resetBookingForm() {
 
 function loadQuickBooking() {
     console.log('🔄 Loading Quick Booking...');
-    
+
     const quickBookingDiv = document.getElementById('quick-booking');
     if (!quickBookingDiv) {
         console.error('❌ quick-booking section not found in HTML');
         showAlert('Quick Booking section not found in HTML.\n\nPlease check your page structure.', 'danger');
         return;
     }
-    
+
     try {
         // Check if we have customers and rooms
         if (customers.length === 0) {
@@ -2814,7 +3689,7 @@ function loadQuickBooking() {
             `;
             return;
         }
-        
+
         const availableRooms = rooms.filter(r => r.status === 'Vacant');
         if (availableRooms.length === 0) {
             quickBookingDiv.innerHTML = `
@@ -2836,7 +3711,7 @@ function loadQuickBooking() {
             `;
             return;
         }
-        
+
         quickBookingDiv.innerHTML = `
             <div class="container-fluid">
                 <div class="row">
@@ -2932,7 +3807,7 @@ function loadQuickBooking() {
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label fw-semibold">Check-out Date & Time *</label>
                                             <input type="datetime-local" class="form-control form-control-lg" id="quick-checkout" 
-                                                   value="${new Date(Date.now() + 24*60*60*1000).toISOString().slice(0, 16)}" 
+                                                   value="${new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 16)}" 
                                                    onchange="calculateQuickTotal()" required>
                                         </div>
                                         
@@ -3068,9 +3943,9 @@ function loadQuickBooking() {
                 </div>
             </div>
         `;
-        
+
         console.log('✅ Quick Booking loaded successfully');
-        
+
     } catch (error) {
         console.error('❌ Error loading Quick Booking:', error);
         quickBookingDiv.innerHTML = `
@@ -3086,30 +3961,30 @@ function loadQuickBooking() {
 // Generate customer options for quick booking
 function generateQuickCustomerOptions() {
     let options = '';
-    
+
     // Sort customers by recent activity (those with bookings first, then by name)
     const sortedCustomers = [...customers].sort((a, b) => {
         const aBookings = bookings.filter(booking => booking.customer_id === a.id).length;
         const bBookings = bookings.filter(booking => booking.customer_id === b.id).length;
-        
+
         if (aBookings !== bBookings) {
             return bBookings - aBookings; // More bookings first
         }
         return a.name.localeCompare(b.name);
     });
-    
+
     sortedCustomers.forEach(customer => {
         const bookingCount = bookings.filter(b => b.customer_id === customer.id).length;
         const isVIP = customer.customer_type === 'VIP';
         const statusIcon = isVIP ? '👑' : bookingCount > 0 ? '⭐' : '👤';
-        
+
         options += `
             <option value="${customer.id}" data-phone="${customer.phone}" data-type="${customer.customer_type}">
                 ${statusIcon} ${customer.name} - ${customer.phone} ${isVIP ? '(VIP)' : bookingCount > 0 ? `(${bookingCount} bookings)` : '(New)'}
             </option>
         `;
     });
-    
+
     return options;
 }
 
@@ -3117,7 +3992,7 @@ function generateQuickCustomerOptions() {
 function generateQuickRoomOptions() {
     const availableRooms = rooms.filter(r => r.status === 'Vacant');
     let options = '';
-    
+
     // Group rooms by type for better organization
     const roomsByType = {};
     availableRooms.forEach(room => {
@@ -3126,17 +4001,17 @@ function generateQuickRoomOptions() {
         }
         roomsByType[room.type].push(room);
     });
-    
+
     // Sort room types by price (cheapest first)
     const sortedTypes = Object.keys(roomsByType).sort((a, b) => {
         const avgPriceA = roomsByType[a].reduce((sum, room) => sum + room.price, 0) / roomsByType[a].length;
         const avgPriceB = roomsByType[b].reduce((sum, room) => sum + room.price, 0) / roomsByType[b].length;
         return avgPriceA - avgPriceB;
     });
-    
+
     sortedTypes.forEach(type => {
         const rooms = roomsByType[type].sort((a, b) => a.room_number - b.room_number);
-        
+
         rooms.forEach(room => {
             options += `
                 <option value="${room.id}" data-price="${room.price}" data-type="${room.type}" data-capacity="${room.capacity || 2}">
@@ -3145,7 +4020,7 @@ function generateQuickRoomOptions() {
             `;
         });
     });
-    
+
     return options;
 }
 
@@ -3153,21 +4028,21 @@ function generateQuickRoomOptions() {
 function updateQuickCustomerInfo() {
     const customerSelect = document.getElementById('quick-customer');
     const customerInfo = document.getElementById('customer-info');
-    
+
     if (!customerSelect || !customerInfo) return;
-    
+
     const customerId = parseInt(customerSelect.value);
     if (!customerId) {
         customerInfo.innerHTML = '';
         return;
     }
-    
+
     const customer = customers.find(c => c.id === customerId);
     if (!customer) return;
-    
+
     const bookingCount = bookings.filter(b => b.customer_id === customer.id).length;
     const isVIP = customer.customer_type === 'VIP';
-    
+
     customerInfo.innerHTML = `
         <div class="card card-sm ${isVIP ? 'border-warning bg-warning bg-opacity-10' : 'border-info bg-info bg-opacity-10'}">
             <div class="card-body p-2">
@@ -3184,7 +4059,7 @@ function updateQuickCustomerInfo() {
             </div>
         </div>
     `;
-    
+
     calculateQuickTotal();
 }
 
@@ -3192,18 +4067,18 @@ function updateQuickCustomerInfo() {
 function updateQuickRoomInfo() {
     const roomSelect = document.getElementById('quick-room');
     const roomInfo = document.getElementById('room-info');
-    
+
     if (!roomSelect || !roomInfo) return;
-    
+
     const roomId = parseInt(roomSelect.value);
     if (!roomId) {
         roomInfo.innerHTML = '';
         return;
     }
-    
+
     const room = rooms.find(r => r.id === roomId);
     if (!room) return;
-    
+
     roomInfo.innerHTML = `
         <div class="card card-sm border-success bg-success bg-opacity-10">
             <div class="card-body p-2">
@@ -3220,7 +4095,7 @@ function updateQuickRoomInfo() {
             </div>
         </div>
     `;
-    
+
     calculateQuickTotal();
 }
 
@@ -3231,37 +4106,37 @@ function calculateQuickTotal() {
         const checkinDate = document.getElementById('quick-checkin')?.value;
         const checkoutDate = document.getElementById('quick-checkout')?.value;
         const guestCount = parseInt(document.getElementById('quick-guests')?.value) || 2;
-        
+
         const quickSummary = document.getElementById('quick-summary');
         const totalField = document.getElementById('quick-total');
-        
+
         if (!roomId || !checkinDate || !checkoutDate) {
             if (quickSummary) quickSummary.innerHTML = 'Select customer and room to see pricing details';
             if (totalField) totalField.value = '';
             return;
         }
-        
+
         const room = rooms.find(r => r.id === roomId);
         if (!room) return;
-        
+
         const checkin = new Date(checkinDate);
         const checkout = new Date(checkoutDate);
         const timeDiff = checkout - checkin;
         const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-        
+
         if (days <= 0) {
             if (quickSummary) {
                 quickSummary.innerHTML = '<div class="alert alert-danger alert-sm mb-0">Check-out must be after check-in!</div>';
             }
             return;
         }
-        
+
         const baseAmount = days * room.price;
         const extraGuestCharge = Math.max(0, guestCount - 2) * 500 * days; // ₹500 per extra guest per day
         const totalAmount = baseAmount + extraGuestCharge;
-        
+
         if (totalField) totalField.value = totalAmount;
-        
+
         if (quickSummary) {
             quickSummary.innerHTML = `
                 <div class="row">
@@ -3278,9 +4153,9 @@ function calculateQuickTotal() {
                 </div>
             `;
         }
-        
+
         updateAdvanceInfo();
-        
+
     } catch (error) {
         console.error('Error calculating quick total:', error);
     }
@@ -3291,11 +4166,11 @@ function updateAdvanceInfo() {
     const totalAmount = parseFloat(document.getElementById('quick-total')?.value) || 0;
     const advanceAmount = parseFloat(document.getElementById('quick-advance')?.value) || 0;
     const advanceInfo = document.getElementById('advance-info');
-    
+
     if (!advanceInfo || totalAmount === 0) return;
-    
+
     const balanceAmount = totalAmount - advanceAmount;
-    
+
     if (advanceAmount > 0) {
         if (advanceAmount >= totalAmount) {
             advanceInfo.innerHTML = '<small class="text-success"><i class="fas fa-check me-1"></i>Fully Paid</small>';
@@ -3311,7 +4186,7 @@ function updateAdvanceInfo() {
 function processQuickBooking() {
     try {
         console.log('🔄 Processing quick booking...');
-        
+
         // Get form data
         const customerId = parseInt(document.getElementById('quick-customer')?.value);
         const roomId = parseInt(document.getElementById('quick-room')?.value);
@@ -3323,26 +4198,26 @@ function processQuickBooking() {
         const totalAmount = parseFloat(document.getElementById('quick-total')?.value) || 0;
         const advanceAmount = parseFloat(document.getElementById('quick-advance')?.value) || 0;
         const notes = document.getElementById('quick-notes')?.value?.trim();
-        
+
         // Validation
         if (!customerId || !roomId || !checkinDate || !checkoutDate || !paymentMethod) {
             showAlert('Please fill all required fields', 'danger');
             return;
         }
-        
+
         if (totalAmount <= 0) {
             showAlert('Invalid booking amount', 'danger');
             return;
         }
-        
+
         const customer = customers.find(c => c.id === customerId);
         const room = rooms.find(r => r.id === roomId);
-        
+
         if (!customer || !room) {
             showAlert('Customer or room not found', 'danger');
             return;
         }
-        
+
         // Create booking
         const booking = {
             id: nextBookingId++,
@@ -3359,9 +4234,9 @@ function processQuickBooking() {
             created_at: new Date().toISOString(),
             created_by: 'Quick Booking'
         };
-        
+
         bookings.push(booking);
-        
+
         // Record advance payment if any
         if (advanceAmount > 0) {
             const payment = {
@@ -3374,33 +4249,33 @@ function processQuickBooking() {
             };
             payments.push(payment);
         }
-        
+
         // Update room status
         room.status = 'Occupied';
         room.current_booking_id = booking.id;
         room.last_booking = new Date().toISOString();
-        
+
         // Save data
         saveToLocalStorage();
-        
+
         // Show success message
         const days = Math.ceil((new Date(checkoutDate) - new Date(checkinDate)) / (1000 * 60 * 60 * 24));
-        
+
         showAlert(`✅ Quick Booking Created Successfully!\n\n📋 Booking ID: #${booking.id}\n👤 Customer: ${customer.name}\n🏨 Room: ${room.room_number} (${room.type})\n👥 Guests: ${guestCount}\n📅 Duration: ${days} day${days > 1 ? 's' : ''}\n💰 Total: ₹${totalAmount.toLocaleString()}\n💵 Advance: ₹${advanceAmount.toLocaleString()}\n📊 Status: ${booking.payment_status}\n\n🎉 Room ${room.room_number} is now occupied!`, 'success', 10000);
-        
+
         // Reset form
         resetQuickBookingForm();
-        
+
         // Update dashboard and other sections
         updateDashboard();
-        
+
         // Ask if user wants to view booking details or create another
         setTimeout(() => {
             if (confirm(`Quick booking created successfully!\n\nBooking #${booking.id} for ${customer.name}\n\nWould you like to:\n- Click OK to view all bookings\n- Click Cancel to create another booking`)) {
                 showSection('all-bookings');
             }
         }, 2000);
-        
+
     } catch (error) {
         console.error('❌ Error processing quick booking:', error);
         showAlert(`Error creating booking: ${error.message}`, 'danger');
@@ -3413,42 +4288,42 @@ function resetQuickBookingForm() {
     if (form) {
         form.reset();
     }
-    
+
     // Reset computed fields
     const customerInfo = document.getElementById('customer-info');
     const roomInfo = document.getElementById('room-info');
     const quickSummary = document.getElementById('quick-summary');
     const advanceInfo = document.getElementById('advance-info');
-    
+
     if (customerInfo) customerInfo.innerHTML = '';
     if (roomInfo) roomInfo.innerHTML = '';
     if (quickSummary) quickSummary.innerHTML = 'Select customer and room to see pricing details';
     if (advanceInfo) advanceInfo.innerHTML = '';
-    
+
     // Reset default dates
     const checkinField = document.getElementById('quick-checkin');
     const checkoutField = document.getElementById('quick-checkout');
-    
+
     if (checkinField) {
         checkinField.value = new Date().toISOString().slice(0, 16);
     }
-    
+
     if (checkoutField) {
-        checkoutField.value = new Date(Date.now() + 24*60*60*1000).toISOString().slice(0, 16);
+        checkoutField.value = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 16);
     }
 }
 
 // Show available rooms
 function showAvailableRooms() {
     const availableRooms = rooms.filter(r => r.status === 'Vacant');
-    
+
     if (availableRooms.length === 0) {
         showAlert('No rooms available at the moment', 'warning');
         return;
     }
-    
+
     let roomsList = '🏨 AVAILABLE ROOMS\n\n';
-    
+
     // Group by type
     const roomsByType = {};
     availableRooms.forEach(room => {
@@ -3457,7 +4332,7 @@ function showAvailableRooms() {
         }
         roomsByType[room.type].push(room);
     });
-    
+
     Object.keys(roomsByType).forEach(type => {
         roomsList += `${type} Rooms:\n`;
         roomsByType[type].sort((a, b) => a.room_number - b.room_number).forEach(room => {
@@ -3465,9 +4340,9 @@ function showAvailableRooms() {
         });
         roomsList += '\n';
     });
-    
+
     roomsList += `Total Available: ${availableRooms.length} rooms`;
-    
+
     alert(roomsList);
 }
 
@@ -3477,7 +4352,7 @@ console.log('✅ Quick Booking functions loaded successfully!');
 function loadAllBookingsWithGuests() {
     const allBookingsDiv = document.getElementById('all-bookings-content') || document.getElementById('booking-history-content');
     if (!allBookingsDiv) return;
-    
+
     if (bookings.length === 0) {
         allBookingsDiv.innerHTML = `
             <div class="text-center py-5">
@@ -3491,7 +4366,7 @@ function loadAllBookingsWithGuests() {
         `;
         return;
     }
-    
+
     let html = `
         <div class="mb-3">
             <h6>Total Bookings: ${bookings.length}</h6>
@@ -3511,11 +4386,11 @@ function loadAllBookingsWithGuests() {
                 </thead>
                 <tbody>
     `;
-    
+
     bookings.forEach(booking => {
         const customer = customers.find(c => c.id === booking.customer_id);
         const room = rooms.find(r => r.id === booking.room_id);
-        
+
         html += `
             <tr>
                 <td>#${booking.id}</td>
@@ -3528,7 +4403,7 @@ function loadAllBookingsWithGuests() {
             </tr>
         `;
     });
-    
+
     html += '</tbody></table></div>';
     allBookingsDiv.innerHTML = html;
     console.log('✅ All bookings loaded');
@@ -3538,11 +4413,11 @@ function loadAllBookingsWithGuests() {
 function loadOccupiedRooms() {
     const occupiedRoomsDiv = document.getElementById('occupied-rooms-list');
     if (!occupiedRoomsDiv) return;
-    
-    const activeBookings = bookings.filter(b => 
+
+    const activeBookings = bookings.filter(b =>
         b.payment_status !== 'Checked Out'
     );
-    
+
     if (activeBookings.length === 0) {
         occupiedRoomsDiv.innerHTML = `
             <div class="text-center py-5">
@@ -3553,12 +4428,12 @@ function loadOccupiedRooms() {
         `;
         return;
     }
-    
+
     let html = '<div class="row g-3">';
     activeBookings.forEach(booking => {
         const customer = customers.find(c => c.id === booking.customer_id);
         const room = rooms.find(r => r.id === booking.room_id);
-        
+
         html += `
             <div class="col-md-6 col-lg-4">
                 <div class="card border-danger">
@@ -3576,7 +4451,7 @@ function loadOccupiedRooms() {
         `;
     });
     html += '</div>';
-    
+
     occupiedRoomsDiv.innerHTML = html;
     console.log('✅ Occupied rooms loaded');
 }
@@ -3587,29 +4462,29 @@ function processCheckout(bookingId) {
         showAlert('Booking not found!', 'danger');
         return;
     }
-    
+
     const customer = customers.find(c => c.id === booking.customer_id);
     const room = rooms.find(r => r.id === booking.room_id);
-    
+
     if (confirm(`💳 CHECKOUT CONFIRMATION\n\nCustomer: ${customer ? customer.name : 'Unknown'}\nRoom: ${room ? room.room_number : 'N/A'}\nGuests: ${booking.guest_count || 1}\n\nProceed with checkout?`)) {
         // ✅ FIXED: Record the actual checkout time (THIS IS THE KEY FIX!)
         const checkoutTime = new Date().toISOString();
-        
+
         booking.payment_status = 'Checked Out';
         booking.actual_checkout_time = checkoutTime; // ✅ This records when checkout actually happened
         booking.updated_at = checkoutTime; // ✅ Also update the general timestamp
-        
+
         // Update room status to vacant
         if (room) {
             room.status = 'Vacant';
             room.last_checkout = checkoutTime;
         }
-        
+
         saveToLocalStorage();
         showAlert(`✅ Checkout completed for ${customer ? customer.name : 'Unknown'}\n\n⏰ Checkout Time: ${new Date(checkoutTime).toLocaleString()}`, 'success');
         loadOccupiedRooms();
         updateDashboard(); // ✅ This will now show the correct checkout count
-        
+
         // ✅ Debug logging
         console.log(`✅ Checkout completed for booking #${booking.id} at ${checkoutTime}`);
     }
@@ -3622,16 +4497,16 @@ function processCheckout(bookingId) {
 
 function loadRecordPayment() {
     console.log('🔄 Loading Record Payment section...');
-    
+
     const paymentSection = document.getElementById('record-payment');
     if (!paymentSection) {
         showAlert('Record Payment section not found', 'danger');
         return;
     }
-    
+
     // Get active bookings for payment
     const activeBookings = bookings.filter(b => b.payment_status !== 'Checked Out');
-    
+
     if (activeBookings.length === 0) {
         paymentSection.innerHTML = `
             <div class="container-fluid">
@@ -3652,7 +4527,7 @@ function loadRecordPayment() {
         `;
         return;
     }
-    
+
     paymentSection.innerHTML = `
         <div class="container-fluid">
             <div class="row">
@@ -3719,26 +4594,26 @@ function loadRecordPayment() {
 
 function generateBookingOptionsForPayment() {
     const activeBookings = bookings.filter(b => b.payment_status !== 'Checked Out');
-    
+
     let options = '';
     activeBookings.forEach(booking => {
         const customer = customers.find(c => c.id === booking.customer_id);
         const room = rooms.find(r => r.id === booking.room_id);
-        
+
         // Calculate pending amount
         const totalAmount = booking.total_amount || 0;
         const paidAmount = payments.filter(p => p.booking_id === booking.id)
             .reduce((sum, payment) => sum + (payment.amount || 0), 0);
         const pendingAmount = totalAmount - paidAmount;
-        
+
         const customerName = customer ? customer.name : 'Walk-in';
         const roomNumber = room ? room.room_number : 'N/A';
-        
+
         options += `<option value="${booking.id}">
             Booking #${booking.id} - ${customerName} - Room ${roomNumber} - Pending: ₹${pendingAmount}
         </option>`;
     });
-    
+
     return options;
 }
 
@@ -3746,25 +4621,25 @@ function selectBookingForPayment() {
     const bookingSelect = document.getElementById('payment-booking');
     const paymentDetails = document.getElementById('payment-details');
     const paymentAmount = document.getElementById('payment-amount');
-    
+
     const bookingId = parseInt(bookingSelect.value);
-    
+
     if (!bookingId) {
         paymentDetails.innerHTML = 'Select a booking to see payment details';
         paymentAmount.value = '';
         return;
     }
-    
+
     const booking = bookings.find(b => b.id === bookingId);
     const customer = customers.find(c => c.id === booking.customer_id);
     const room = rooms.find(r => r.id === booking.room_id);
-    
+
     // Calculate payment details
     const totalAmount = booking.total_amount || 0;
     const paidAmount = payments.filter(p => p.booking_id === booking.id)
         .reduce((sum, payment) => sum + (payment.amount || 0), 0);
     const pendingAmount = totalAmount - paidAmount;
-    
+
     paymentDetails.innerHTML = `
         <p><strong>Customer:</strong> ${customer ? customer.name : 'Unknown'}</p>
         <p><strong>Room:</strong> ${room ? room.room_number : 'N/A'}</p>
@@ -3773,7 +4648,7 @@ function selectBookingForPayment() {
         <p><strong>Pending Amount:</strong> <span class="text-danger">₹${pendingAmount}</span></p>
         <p><strong>Status:</strong> <span class="badge bg-${booking.payment_status === 'Paid' ? 'success' : booking.payment_status === 'Partial' ? 'warning' : 'danger'}">${booking.payment_status}</span></p>
     `;
-    
+
     // Set suggested payment amount
     paymentAmount.value = pendingAmount;
 }
@@ -3784,18 +4659,18 @@ function recordPayment() {
         const amount = parseFloat(document.getElementById('payment-amount').value);
         const paymentType = document.getElementById('payment-type').value;
         const reference = document.getElementById('payment-reference').value;
-        
+
         if (!bookingId || !amount || !paymentType) {
             showAlert('Please fill all required fields', 'danger');
             return;
         }
-        
+
         const booking = bookings.find(b => b.id === bookingId);
         if (!booking) {
             showAlert('Booking not found', 'danger');
             return;
         }
-        
+
         // Create payment record
         const payment = {
             id: nextPaymentId++,
@@ -3805,31 +4680,31 @@ function recordPayment() {
             reference_id: reference || null,
             payment_time: new Date().toISOString()
         };
-        
+
         payments.push(payment);
-        
+
         // Update booking payment status
         const totalAmount = booking.total_amount || 0;
         const totalPaid = payments.filter(p => p.booking_id === bookingId)
             .reduce((sum, p) => sum + p.amount, 0);
-        
+
         if (totalPaid >= totalAmount) {
             booking.payment_status = 'Paid';
         } else if (totalPaid > 0) {
             booking.payment_status = 'Partial';
         }
-        
+
         saveToLocalStorage();
-        
+
         const customer = customers.find(c => c.id === booking.customer_id);
         showAlert(`✅ Payment Recorded!\n\nAmount: ₹${amount}\nCustomer: ${customer ? customer.name : 'Unknown'}\nMethod: ${paymentType}\nStatus: ${booking.payment_status}`, 'success');
-        
+
         // Reset form
         document.getElementById('payment-form').reset();
         document.getElementById('payment-details').innerHTML = 'Select a booking to see payment details';
-        
+
         updateDashboard();
-        
+
     } catch (error) {
         console.error('Error recording payment:', error);
         showAlert('Error recording payment: ' + error.message, 'danger');
@@ -3841,7 +4716,7 @@ console.log('✅ Payment recording functions loaded!');
 function loadPaymentHistory() {
     const paymentHistoryDiv = document.getElementById('payment-history-content');
     if (!paymentHistoryDiv) return;
-    
+
     if (payments.length === 0) {
         paymentHistoryDiv.innerHTML = `
             <div class="text-center py-5">
@@ -3852,7 +4727,7 @@ function loadPaymentHistory() {
         `;
         return;
     }
-    
+
     let html = `
         <div class="mb-3">
             <h6>Total Payments: ${payments.length} | Total Amount: ${formatCurrency(payments.reduce((sum, p) => sum + p.amount, 0))}</h6>
@@ -3870,7 +4745,7 @@ function loadPaymentHistory() {
                 </thead>
                 <tbody>
     `;
-    
+
     payments.forEach(payment => {
         html += `
             <tr>
@@ -3882,7 +4757,7 @@ function loadPaymentHistory() {
             </tr>
         `;
     });
-    
+
     html += '</tbody></table></div>';
     paymentHistoryDiv.innerHTML = html;
     console.log('✅ Payment history loaded');
@@ -3891,12 +4766,12 @@ function loadPaymentHistory() {
 function loadRevenueReports() {
     const revenueReportsDiv = document.getElementById('revenue-reports-content');
     if (!revenueReportsDiv) return;
-    
+
     const totalRevenue = payments.reduce((sum, p) => sum + (p.amount || 0), 0);
     const totalBookings = bookings.length;
     const totalGuests = bookings.reduce((sum, b) => sum + (b.guest_count || 1), 0);
     const averageBookingValue = totalBookings > 0 ? totalRevenue / totalBookings : 0;
-    
+
     revenueReportsDiv.innerHTML = `
         <div class="row mb-4">
             <div class="col-md-3">
@@ -3969,14 +4844,14 @@ function loadRevenueReports() {
 
 function loadBookingHistory() {
     console.log('🔄 Loading Booking History...');
-    
+
     const bookingHistoryDiv = document.getElementById('booking-history-content');
     if (!bookingHistoryDiv) {
         console.error('❌ booking-history-content section not found in HTML');
         showAlert('Booking History section not found in HTML.\n\nPlease check your page structure.', 'danger');
         return;
     }
-    
+
     try {
         // Check if we have any bookings
         if (bookings.length === 0) {
@@ -3999,24 +4874,24 @@ function loadBookingHistory() {
             `;
             return;
         }
-        
+
         // Sort bookings by date (newest first)
-        const sortedBookings = [...bookings].sort((a, b) => 
+        const sortedBookings = [...bookings].sort((a, b) =>
             new Date(b.created_at || b.checkin_time) - new Date(a.created_at || a.checkin_time)
         );
-        
+
         // Calculate statistics
         const totalBookings = bookings.length;
         const completedBookings = bookings.filter(b => b.payment_status === 'Checked Out').length;
         const activeBookings = bookings.filter(b => b.payment_status !== 'Checked Out').length;
         const totalRevenue = bookings.reduce((sum, booking) => sum + (booking.total_amount || 0), 0);
         const totalGuests = bookings.reduce((sum, booking) => sum + (booking.guest_count || 1), 0);
-        
+
         // Group bookings by status for filtering
         const pendingBookings = bookings.filter(b => b.payment_status === 'Pending').length;
         const paidBookings = bookings.filter(b => b.payment_status === 'Paid').length;
         const partialBookings = bookings.filter(b => b.payment_status === 'Partial').length;
-        
+
         bookingHistoryDiv.innerHTML = `
             <div class="container-fluid">
                 <!-- Header with Statistics -->
@@ -4169,9 +5044,9 @@ function loadBookingHistory() {
                 </div>
             </div>
         `;
-        
+
         console.log('✅ Booking History loaded successfully');
-        
+
     } catch (error) {
         console.error('❌ Error loading Booking History:', error);
         bookingHistoryDiv.innerHTML = `
@@ -4189,26 +5064,26 @@ function generateBookingHistoryRows(bookingsToShow) {
     if (bookingsToShow.length === 0) {
         return '<tr><td colspan="9" class="text-center py-4">No bookings match the current filters</td></tr>';
     }
-    
+
     let html = '';
-    
+
     bookingsToShow.forEach(booking => {
         const customer = customers.find(c => c.id === booking.customer_id);
         const room = rooms.find(r => r.id === booking.room_id);
-        
+
         const customerName = customer ? customer.name : 'Walk-in Customer';
         const roomNumber = room ? room.room_number : 'N/A';
         const roomType = room ? room.type : 'N/A';
-        
+
         const checkinDate = booking.checkin_time ? new Date(booking.checkin_time).toLocaleDateString() : 'N/A';
         const checkoutDate = booking.checkout_time ? new Date(booking.checkout_time).toLocaleDateString() : 'N/A';
-        
+
         const statusBadge = getStatusBadge(booking.payment_status || 'Pending');
-        
+
         // Check if customer is VIP
         const isVIP = customer && customer.customer_type === 'VIP';
         const rowClass = isVIP ? 'table-warning' : '';
-        
+
         html += `
             <tr class="${rowClass}" data-booking-id="${booking.id}">
                 <td>
@@ -4260,7 +5135,7 @@ function generateBookingHistoryRows(bookingsToShow) {
             </tr>
         `;
     });
-    
+
     return html;
 }
 
@@ -4269,18 +5144,18 @@ function generateRecentActivity() {
     const recentBookings = [...bookings]
         .sort((a, b) => new Date(b.created_at || b.checkin_time) - new Date(a.created_at || a.checkin_time))
         .slice(0, 5);
-    
+
     if (recentBookings.length === 0) {
         return '<p class="text-muted text-center py-3">No recent booking activity</p>';
     }
-    
+
     let html = '<div class="list-group list-group-flush">';
-    
+
     recentBookings.forEach(booking => {
         const customer = customers.find(c => c.id === booking.customer_id);
         const room = rooms.find(r => r.id === booking.room_id);
         const timeAgo = getTimeAgo(booking.created_at || booking.checkin_time);
-        
+
         html += `
             <div class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
@@ -4291,7 +5166,7 @@ function generateRecentActivity() {
             </div>
         `;
     });
-    
+
     html += '</div>';
     return html;
 }
@@ -4301,22 +5176,22 @@ function filterBookingHistory() {
     const statusFilter = document.getElementById('status-filter')?.value || '';
     const dateFilter = document.getElementById('date-filter')?.value || '';
     const searchTerm = document.getElementById('search-bookings')?.value.toLowerCase() || '';
-    
+
     let filteredBookings = [...bookings];
-    
+
     // Filter by status
     if (statusFilter) {
         filteredBookings = filteredBookings.filter(booking => booking.payment_status === statusFilter);
     }
-    
+
     // Filter by date
     if (dateFilter) {
         const now = new Date();
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        
+
         filteredBookings = filteredBookings.filter(booking => {
             const bookingDate = new Date(booking.created_at || booking.checkin_time);
-            
+
             switch (dateFilter) {
                 case 'today':
                     return bookingDate >= today;
@@ -4334,13 +5209,13 @@ function filterBookingHistory() {
             }
         });
     }
-    
+
     // Filter by search term
     if (searchTerm) {
         filteredBookings = filteredBookings.filter(booking => {
             const customer = customers.find(c => c.id === booking.customer_id);
             const room = rooms.find(r => r.id === booking.room_id);
-            
+
             return (
                 booking.id.toString().includes(searchTerm) ||
                 (customer && customer.name.toLowerCase().includes(searchTerm)) ||
@@ -4349,12 +5224,12 @@ function filterBookingHistory() {
             );
         });
     }
-    
+
     // Sort filtered results
-    filteredBookings.sort((a, b) => 
+    filteredBookings.sort((a, b) =>
         new Date(b.created_at || b.checkin_time) - new Date(a.created_at || a.checkin_time)
     );
-    
+
     // Update table
     const tbody = document.getElementById('booking-history-tbody');
     if (tbody) {
@@ -4367,11 +5242,11 @@ function clearBookingFilters() {
     const statusFilter = document.getElementById('status-filter');
     const dateFilter = document.getElementById('date-filter');
     const searchInput = document.getElementById('search-bookings');
-    
+
     if (statusFilter) statusFilter.value = '';
     if (dateFilter) dateFilter.value = '';
     if (searchInput) searchInput.value = '';
-    
+
     filterBookingHistory();
 }
 
@@ -4382,50 +5257,50 @@ function viewBookingDetails(bookingId) {
         showAlert('Booking not found!', 'danger');
         return;
     }
-    
+
     const customer = customers.find(c => c.id === booking.customer_id);
     const room = rooms.find(r => r.id === booking.room_id);
-    
+
     // Calculate payment details
     const totalAmount = booking.total_amount || 0;
     const paidAmount = payments.filter(p => p.booking_id === booking.id)
         .reduce((sum, payment) => sum + (payment.amount || 0), 0);
     const balanceAmount = totalAmount - paidAmount;
-    
+
     let details = `📋 BOOKING DETAILS - #${booking.id}\n\n`;
     details += `👤 CUSTOMER INFORMATION\n`;
     details += `Name: ${customer ? customer.name : 'Walk-in Customer'}\n`;
     details += `Phone: ${customer ? customer.phone : 'N/A'}\n`;
     details += `Email: ${customer ? customer.email : 'N/A'}\n`;
     details += `Type: ${customer ? customer.customer_type : 'Regular'}\n\n`;
-    
+
     details += `🏨 ROOM INFORMATION\n`;
     details += `Room: ${room ? room.room_number : 'N/A'}\n`;
     details += `Type: ${room ? room.type : 'N/A'}\n`;
     details += `Rate: ₹${room ? room.price.toLocaleString() : 'N/A'}/night\n\n`;
-    
+
     details += `📅 BOOKING INFORMATION\n`;
     details += `Check-in: ${booking.checkin_time ? new Date(booking.checkin_time).toLocaleString() : 'N/A'}\n`;
     details += `Check-out: ${booking.checkout_time ? new Date(booking.checkout_time).toLocaleString() : 'N/A'}\n`;
     details += `Guests: ${booking.guest_count || 1}\n`;
     details += `Status: ${booking.payment_status || 'Pending'}\n\n`;
-    
+
     details += `💰 PAYMENT INFORMATION\n`;
     details += `Total Amount: ₹${totalAmount.toLocaleString()}\n`;
     details += `Paid Amount: ₹${paidAmount.toLocaleString()}\n`;
     details += `Balance: ₹${balanceAmount.toLocaleString()}\n\n`;
-    
+
     details += `📊 SYSTEM INFORMATION\n`;
     details += `Created: ${booking.created_at ? new Date(booking.created_at).toLocaleString() : 'N/A'}\n`;
     details += `Booking ID: ${booking.id}`;
-    
+
     alert(details);
 }
 
 // Record payment for specific booking
 function recordPaymentForBooking(bookingId) {
     showSection('record-payment');
-    
+
     // Pre-select the booking in the payment form
     setTimeout(() => {
         const bookingSelect = document.getElementById('payment-booking');
@@ -4442,11 +5317,11 @@ function recordPaymentForBooking(bookingId) {
 function exportBookingHistory() {
     try {
         let csvContent = "Booking ID,Customer Name,Phone,Room Number,Room Type,Guests,Check-in,Check-out,Amount,Status,Created Date\n";
-        
+
         bookings.forEach(booking => {
             const customer = customers.find(c => c.id === booking.customer_id);
             const room = rooms.find(r => r.id === booking.room_id);
-            
+
             const row = [
                 booking.id,
                 customer ? customer.name : 'Walk-in Customer',
@@ -4460,10 +5335,10 @@ function exportBookingHistory() {
                 booking.payment_status || 'Pending',
                 booking.created_at ? new Date(booking.created_at).toLocaleDateString() : 'N/A'
             ].map(field => `"${field}"`).join(',');
-            
+
             csvContent += row + "\n";
         });
-        
+
         // Create and download CSV file
         const blob = new Blob([csvContent], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
@@ -4474,9 +5349,9 @@ function exportBookingHistory() {
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
-        
+
         showAlert('✅ Booking history exported successfully!', 'success');
-        
+
     } catch (error) {
         console.error('Error exporting booking history:', error);
         showAlert('Error exporting booking history', 'danger');
@@ -4486,12 +5361,12 @@ function exportBookingHistory() {
 // Helper function to get time ago
 function getTimeAgo(dateString) {
     if (!dateString) return 'N/A';
-    
+
     const now = new Date();
     const date = new Date(dateString);
     const diffMs = now - date;
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return '1 day ago';
     if (diffDays < 7) return `${diffDays} days ago`;
@@ -4508,11 +5383,11 @@ function loadWhatsAppMarketing() {
         console.error('whatsapp-marketing section not found in HTML');
         return;
     }
-    
+
     const marketingCustomers = customers.filter(c => c.whatsapp_marketing);
     const birthdayCustomers = getTodayBirthdayCustomers();
     const vipCustomers = customers.filter(c => c.customer_type === 'VIP' && c.whatsapp_marketing);
-    
+
     whatsappDiv.innerHTML = `
         <div class="container-fluid">
             <!-- Marketing Dashboard -->
@@ -4635,7 +5510,7 @@ function loadWhatsAppMarketing() {
         }
         </style>
     `;
-    
+
     console.log('✅ WhatsApp Marketing loaded');
 }
 
@@ -4643,15 +5518,15 @@ function getTodayBirthdayCustomers() {
     const today = new Date();
     const todayMonth = today.getMonth() + 1; // getMonth() is 0-indexed
     const todayDate = today.getDate();
-    
+
     return customers.filter(customer => {
         if (!customer.dob || !customer.birthday_offers) return false;
-        
+
         try {
             const dob = new Date(customer.dob);
             const birthMonth = dob.getMonth() + 1;
             const birthDate = dob.getDate();
-            
+
             return birthMonth === todayMonth && birthDate === todayDate;
         } catch {
             return false;
@@ -4662,13 +5537,13 @@ function getTodayBirthdayCustomers() {
 function generateMarketingAnalytics() {
     const customerTypes = ['Regular', 'VIP', 'Corporate', 'Group', 'Wedding'];
     let html = '';
-    
+
     customerTypes.forEach(type => {
         const totalCount = customers.filter(c => c.customer_type === type).length;
         const marketingCount = customers.filter(c => c.customer_type === type && c.whatsapp_marketing).length;
         const birthdayCount = customers.filter(c => c.customer_type === type && c.birthday_offers).length;
         const conversionRate = totalCount > 0 ? Math.round((marketingCount / totalCount) * 100) : 0;
-        
+
         if (totalCount > 0) {
             html += `
                 <tr>
@@ -4687,18 +5562,18 @@ function generateMarketingAnalytics() {
             `;
         }
     });
-    
+
     return html || '<tr><td colspan="5" class="text-center">No customer data available</td></tr>';
 }
 
 function sendDiscountOffer() {
     const marketingCustomers = customers.filter(c => c.whatsapp_marketing);
-    
+
     if (marketingCustomers.length === 0) {
         showAlert('No customers have WhatsApp marketing enabled', 'warning');
         return;
     }
-    
+
     const message = `🎉 Special Discount Offer from Crown Inn Hotel! 🎉
 
 Hello {name}!
@@ -4720,12 +5595,12 @@ Visit: Crown Inn Hotel
 
 function sendBirthdayWishes() {
     const birthdayCustomers = getTodayBirthdayCustomers();
-    
+
     if (birthdayCustomers.length === 0) {
         showAlert('No customer birthdays today', 'info');
         return;
     }
-    
+
     const message = `🎂 Happy Birthday {name}! 🎂
 
 Warmest birthday wishes from all of us at Crown Inn Hotel!
@@ -4745,12 +5620,12 @@ Crown Inn Hotel - Where memories are made!`;
 
 function sendVIPOffers() {
     const vipCustomers = customers.filter(c => c.customer_type === 'VIP' && c.whatsapp_marketing);
-    
+
     if (vipCustomers.length === 0) {
         showAlert('No VIP customers with marketing enabled', 'warning');
         return;
     }
-    
+
     const message = `👑 Exclusive VIP Offer - Crown Inn Hotel
 
 Dear {name},
@@ -4777,37 +5652,37 @@ function sendBulkWhatsAppMessages(customerList, messageTemplate, campaignType) {
         showAlert('No customers to send messages to', 'warning');
         return;
     }
-    
+
     let successCount = 0;
-    
+
     // Show progress
     showAlert(`📱 Sending ${campaignType} to ${customerList.length} customers...\n\nThis will open WhatsApp for each customer.`, 'info', 3000);
-    
+
     customerList.forEach((customer, index) => {
         setTimeout(() => {
             try {
                 const personalizedMessage = messageTemplate
                     .replace(/{name}/g, customer.name)
                     .replace(/{hotel}/g, 'Crown Inn Hotel');
-                
+
                 const whatsappNumber = customer.whatsapp || customer.phone;
                 const cleanNumber = whatsappNumber.replace(/\D/g, ''); // Remove non-digits
-                
+
                 // Create WhatsApp URL
                 const whatsappURL = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(personalizedMessage)}`;
-                
+
                 // Open WhatsApp in new tab
                 window.open(whatsappURL, '_blank');
-                
+
                 successCount++;
-                
+
                 // Show progress for last customer
                 if (index === customerList.length - 1) {
                     setTimeout(() => {
                         showAlert(`✅ ${campaignType} Campaign Completed!\n\n📱 Opened WhatsApp for ${successCount} customers\n\nPlease send the messages manually from WhatsApp Web/App.`, 'success', 8000);
                     }, 2000);
                 }
-                
+
             } catch (error) {
                 console.error(`Error sending to ${customer.name}:`, error);
             }
@@ -4821,21 +5696,21 @@ function sendWhatsAppMessage(customerId) {
         showAlert('Customer not found!', 'danger');
         return;
     }
-    
+
     if (!customer.whatsapp_marketing) {
         if (!confirm(`${customer.name} has not enabled WhatsApp marketing.\n\nDo you still want to send a message?`)) {
             return;
         }
     }
-    
-    const message = prompt(`Send WhatsApp message to ${customer.name}:\n\nEnter your message:`, 
+
+    const message = prompt(`Send WhatsApp message to ${customer.name}:\n\nEnter your message:`,
         `Hello ${customer.name},\n\nGreetings from Crown Inn Hotel!\n\nWe have exciting offers for you. Contact us for more details.\n\nBest regards,\nCrown Inn Hotel Team`);
-    
+
     if (message) {
         const whatsappNumber = customer.whatsapp || customer.phone;
         const cleanNumber = whatsappNumber.replace(/\D/g, '');
         const whatsappURL = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
-        
+
         window.open(whatsappURL, '_blank');
         showAlert(`✅ WhatsApp opened for ${customer.name}\n\nPlease send the message manually.`, 'success');
     }
@@ -4856,27 +5731,27 @@ function sendWhatsAppMessage(customerId) {
 // ✅ MAIN WHATSAPP MARKETING FUNCTION - Replace your existing one
 function loadWhatsAppMarketing() {
     console.log('🔄 Loading Advanced WhatsApp Marketing...');
-    
+
     const whatsappDiv = document.getElementById('whatsapp-marketing');
     if (!whatsappDiv) {
         console.error('❌ whatsapp-marketing section not found in HTML');
         showAlert('WhatsApp Marketing section not found in HTML.\n\nPlease ensure you have a div with id="whatsapp-marketing" in your index.html file.', 'danger');
         return;
     }
-    
+
     try {
         // Get marketing statistics
         const marketingCustomers = customers.filter(c => c.whatsapp_marketing);
         const birthdayCustomers = getTodayBirthdayCustomers();
         const vipCustomers = customers.filter(c => c.customer_type === 'VIP' && c.whatsapp_marketing);
         const corporateCustomers = customers.filter(c => c.customer_type === 'Corporate' && c.whatsapp_marketing);
-        
+
         // Check for unsent birthday wishes
-        const pendingBirthdayWishes = birthdayCustomers.filter(customer => 
-            !customer.birthday_wish_sent_today || 
+        const pendingBirthdayWishes = birthdayCustomers.filter(customer =>
+            !customer.birthday_wish_sent_today ||
             customer.birthday_wish_sent_today !== new Date().toDateString()
         );
-        
+
         whatsappDiv.innerHTML = `
             <div class="container-fluid">
                 <!-- Header Section -->
@@ -5100,9 +5975,9 @@ function loadWhatsAppMarketing() {
                                 </div>
                             </div>
                             <div class="card-body">
-                                ${marketingCustomers.length > 0 ? 
-                                    generateMarketingCustomersList(marketingCustomers.slice(0, 8)) : 
-                                    `<div class="text-center py-4">
+                                ${marketingCustomers.length > 0 ?
+                generateMarketingCustomersList(marketingCustomers.slice(0, 8)) :
+                `<div class="text-center py-4">
                                         <i class="fas fa-users fa-3x text-muted mb-3 opacity-50"></i>
                                         <h6>No Marketing Customers</h6>
                                         <p class="text-muted mb-3">No customers have enabled WhatsApp marketing yet.</p>
@@ -5110,7 +5985,7 @@ function loadWhatsAppMarketing() {
                                             <i class="fas fa-plus me-1"></i>Add Customer with Marketing
                                         </button>
                                     </div>`
-                                }
+            }
                             </div>
                         </div>
                     </div>
@@ -5138,7 +6013,7 @@ function loadWhatsAppMarketing() {
                 </div>
             </div>
         `;
-        
+
         // Auto-check for birthdays on page load
         if (pendingBirthdayWishes.length > 0) {
             setTimeout(() => {
@@ -5147,9 +6022,9 @@ function loadWhatsAppMarketing() {
                 }
             }, 2000);
         }
-        
+
         console.log('✅ Advanced WhatsApp Marketing loaded successfully');
-        
+
     } catch (error) {
         console.error('❌ Error loading WhatsApp Marketing:', error);
         whatsappDiv.innerHTML = `
@@ -5167,15 +6042,15 @@ function getTodayBirthdayCustomers() {
     const today = new Date();
     const todayMonth = today.getMonth() + 1;
     const todayDate = today.getDate();
-    
+
     return customers.filter(customer => {
         if (!customer.dob || !customer.whatsapp_marketing) return false;
-        
+
         try {
             const dob = new Date(customer.dob);
             const birthMonth = dob.getMonth() + 1;
             const birthDate = dob.getDate();
-            
+
             return birthMonth === todayMonth && birthDate === todayDate;
         } catch (error) {
             return false;
@@ -5186,23 +6061,23 @@ function getTodayBirthdayCustomers() {
 // ✅ AUTO SEND BIRTHDAY WISHES
 function autoSendBirthdayWishes() {
     const birthdayCustomers = getTodayBirthdayCustomers();
-    
+
     if (birthdayCustomers.length === 0) {
         showAlert('🎂 No customer birthdays today!\n\nThe system will automatically detect birthdays when customers are added with birth dates.', 'info');
         return;
     }
-    
+
     // Filter customers who haven't received wishes today
-    const pendingCustomers = birthdayCustomers.filter(customer => 
-        !customer.birthday_wish_sent_today || 
+    const pendingCustomers = birthdayCustomers.filter(customer =>
+        !customer.birthday_wish_sent_today ||
         customer.birthday_wish_sent_today !== new Date().toDateString()
     );
-    
+
     if (pendingCustomers.length === 0) {
         showAlert('✅ Birthday wishes already sent to all customers today!\n\n🎉 All birthday customers have been contacted.', 'success');
         return;
     }
-    
+
     const birthdayMessage = `🎂✨ HAPPY BIRTHDAY {name}! ✨🎂
 
 🎉 Warmest birthday wishes from Crown Inn Hotel family!
@@ -5227,17 +6102,17 @@ function autoSendBirthdayWishes() {
 Thank you for being our treasured guest! 🙏❤️
 
 #BirthdaySpecial #30PercentOFF #CrownInnHotel`;
-    
+
     if (confirm(`🎂🎉 AUTO BIRTHDAY WISHES SYSTEM\n\n✨ FOUND ${pendingCustomers.length} BIRTHDAY CUSTOMER${pendingCustomers.length > 1 ? 'S' : ''} TODAY!\n\n👑 Birthday Customers:\n${pendingCustomers.map(c => `🎉 ${c.name} - ${c.phone}`).join('\n')}\n\n🎁 BIRTHDAY PACKAGE INCLUDES:\n• 30% OFF discount\n• FREE birthday cake\n• FREE room decoration\n• Complimentary dinner\n• Late checkout\n• Room upgrade (subject to availability)\n\n📱 This will open WhatsApp for each customer\n⚡ Click OK to start AUTO sending!`)) {
-        
+
         showAlert(`🚀 STARTING AUTO BIRTHDAY CAMPAIGN...\n\n🎂 Sending personalized wishes to ${pendingCustomers.length} customers\n⏳ Please wait while WhatsApp opens for each customer...\n\n⚠️ Important: You'll need to manually SEND each message in WhatsApp for privacy compliance.`, 'info', 6000);
-        
+
         sendBulkMessagesToCustomers(pendingCustomers, birthdayMessage, '🎂 Birthday Wishes Campaign', () => {
             // Mark customers as having received birthday wishes today
             pendingCustomers.forEach(customer => {
                 customer.birthday_wish_sent_today = new Date().toDateString();
                 customer.last_birthday_wish = new Date().toISOString();
-                
+
                 // Add to marketing history
                 if (!customer.marketing_history) {
                     customer.marketing_history = [];
@@ -5249,9 +6124,9 @@ Thank you for being our treasured guest! 🙏❤️
                     status: 'Sent'
                 });
             });
-            
+
             saveToLocalStorage();
-            
+
             // Reload the marketing page to update the interface
             setTimeout(() => {
                 loadWhatsAppMarketing();
@@ -5263,38 +6138,38 @@ Thank you for being our treasured guest! 🙏❤️
 // ✅ BULK CUSTOM MESSAGE SYSTEM
 function sendBulkCustomMessage() {
     const marketingCustomers = customers.filter(c => c.whatsapp_marketing);
-    
+
     if (marketingCustomers.length === 0) {
         showAlert('❌ NO CUSTOMERS FOUND\n\nNo customers have WhatsApp marketing enabled.\nPlease add customers first or enable marketing for existing customers.', 'warning');
         return;
     }
-    
+
     // Get custom message from user
     const customMessage = prompt(`📱 BULK WHATSAPP MESSAGE SYSTEM\n\n👥 Target Customers: ${marketingCustomers.length}\n\n✏️ Write your custom message below:\n(Use {name} for customer name, {hotel} for hotel name)\n\nExample:\n"🏨 Special offer for {name}! Get 25% OFF at {hotel}. Book now!"\n\n📝 Enter your message:`);
-    
+
     if (!customMessage) {
         showAlert('❌ No message entered. Campaign cancelled.', 'info');
         return;
     }
-    
+
     if (customMessage.length < 10) {
         showAlert('❌ Message too short. Please write a proper message (at least 10 characters).', 'warning');
         return;
     }
-    
+
     // Show campaign preview
     const previewMessage = customMessage
         .replace(/{name}/g, 'CUSTOMER_NAME')
         .replace(/{hotel}/g, 'Crown Inn Hotel');
-    
+
     if (!confirm(`📱 BULK CAMPAIGN PREVIEW\n\n👥 Target: ${marketingCustomers.length} customers\n📝 Your message preview:\n\n"${previewMessage}"\n\n✅ This looks good?\n❌ Click Cancel to edit message\n\n📲 Click OK to start sending!`)) {
         // Let them try again
         return sendBulkCustomMessage();
     }
-    
+
     // Start sending
     showAlert(`🚀 STARTING BULK CAMPAIGN...\n\n📱 Sending to ${marketingCustomers.length} customers\n⏳ WhatsApp will open for each customer\n⚠️ You need to manually SEND each message`, 'info', 5000);
-    
+
     sendBulkMessagesToCustomers(marketingCustomers, customMessage, '📝 Custom Bulk Campaign');
 }
 
@@ -5304,13 +6179,13 @@ function sendBulkMessagesToCustomers(customerList, messageTemplate, campaignType
         showAlert('❌ No customers to send messages to', 'warning');
         return;
     }
-    
+
     console.log(`📱 Starting ${campaignType} for ${customerList.length} customers`);
-    
+
     let successCount = 0;
     let errorCount = 0;
     const startTime = new Date();
-    
+
     customerList.forEach((customer, index) => {
         setTimeout(() => {
             try {
@@ -5320,23 +6195,23 @@ function sendBulkMessagesToCustomers(customerList, messageTemplate, campaignType
                     .replace(/{hotel}/g, 'Crown Inn Hotel')
                     .replace(/{phone}/g, customer.phone)
                     .replace(/{email}/g, customer.email);
-                
+
                 // Get WhatsApp number
                 const whatsappNumber = customer.whatsapp || customer.phone;
                 const cleanNumber = whatsappNumber.replace(/\D/g, '');
-                
+
                 if (cleanNumber.length < 10) {
                     console.error(`❌ Invalid phone number for ${customer.name}: ${whatsappNumber}`);
                     errorCount++;
                     return;
                 }
-                
+
                 // Create WhatsApp URL
                 const whatsappURL = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(personalizedMessage)}`;
-                
+
                 // Open WhatsApp
                 window.open(whatsappURL, '_blank');
-                
+
                 // Update customer marketing history
                 if (!customer.marketing_history) {
                     customer.marketing_history = [];
@@ -5347,33 +6222,33 @@ function sendBulkMessagesToCustomers(customerList, messageTemplate, campaignType
                     message_preview: messageTemplate.substring(0, 50) + '...',
                     status: 'Sent'
                 });
-                
+
                 successCount++;
                 console.log(`📱 ${index + 1}/${customerList.length} - Opened WhatsApp for: ${customer.name}`);
-                
+
                 // Show progress for large campaigns
                 if (customerList.length > 10 && (index + 1) % 10 === 0) {
                     console.log(`📊 Progress: ${index + 1}/${customerList.length} messages processed`);
                 }
-                
+
                 // Final summary
                 if (index === customerList.length - 1) {
                     setTimeout(() => {
                         saveToLocalStorage();
-                        
+
                         const endTime = new Date();
                         const duration = Math.round((endTime - startTime) / 1000);
-                        
-                        showAlert(`🎉 ${campaignType.toUpperCase()} COMPLETED!\n\n📊 CAMPAIGN SUMMARY:\n✅ Successfully processed: ${successCount}\n❌ Failed: ${errorCount}\n⏱️ Total time: ${duration} seconds\n📱 Average: ${Math.round(duration/customerList.length)} sec per customer\n\n📲 NEXT STEPS:\n1. Go to each WhatsApp Web/App tab\n2. Review and SEND each message\n3. Monitor customer responses\n\n💾 Customer marketing history updated\n🎯 Campaign tracking saved automatically`, 'success', 15000);
-                        
+
+                        showAlert(`🎉 ${campaignType.toUpperCase()} COMPLETED!\n\n📊 CAMPAIGN SUMMARY:\n✅ Successfully processed: ${successCount}\n❌ Failed: ${errorCount}\n⏱️ Total time: ${duration} seconds\n📱 Average: ${Math.round(duration / customerList.length)} sec per customer\n\n📲 NEXT STEPS:\n1. Go to each WhatsApp Web/App tab\n2. Review and SEND each message\n3. Monitor customer responses\n\n💾 Customer marketing history updated\n🎯 Campaign tracking saved automatically`, 'success', 15000);
+
                         // Execute callback if provided
                         if (callback && typeof callback === 'function') {
                             callback();
                         }
-                        
+
                     }, 4000);
                 }
-                
+
             } catch (error) {
                 console.error(`❌ Error processing ${customer.name}:`, error);
                 errorCount++;
@@ -5385,12 +6260,12 @@ function sendBulkMessagesToCustomers(customerList, messageTemplate, campaignType
 // ✅ FESTIVAL & CAMPAIGN TEMPLATES
 function sendFestivalOffer(festival) {
     const marketingCustomers = customers.filter(c => c.whatsapp_marketing);
-    
+
     if (marketingCustomers.length === 0) {
         showAlert('❌ No customers with marketing enabled', 'warning');
         return;
     }
-    
+
     const festivalMessages = {
         diwali: {
             title: '🪔 Diwali Special Offer',
@@ -5418,13 +6293,13 @@ Crown Inn Hotel - Illuminating your celebrations! 🏨✨`,
             discount: '40%'
         }
     };
-    
+
     const campaign = festivalMessages[festival];
     if (!campaign) {
         showAlert('❌ Festival campaign not found', 'danger');
         return;
     }
-    
+
     if (confirm(`${campaign.title.toUpperCase()}\n\n📊 Campaign Details:\n• Discount: ${campaign.discount}\n• Target: ${marketingCustomers.length} customers\n• Type: ${campaign.title}\n\n📱 Send this campaign to all marketing customers?`)) {
         showAlert(`🚀 Starting ${campaign.title}...\n\n📱 Processing ${marketingCustomers.length} customers`, 'info', 4000);
         sendBulkMessagesToCustomers(marketingCustomers, campaign.message, campaign.title);
@@ -5433,7 +6308,7 @@ Crown Inn Hotel - Illuminating your celebrations! 🏨✨`,
 
 function sendWeekendOffer() {
     const marketingCustomers = customers.filter(c => c.whatsapp_marketing);
-    
+
     const message = `🌟 WEEKEND SPECIAL - CROWN INN HOTEL! 🌟
 
 Dear {name},
@@ -5465,7 +6340,7 @@ Crown Inn Hotel - Your weekend paradise! 🏨✨`;
 
 function sendFlashSale() {
     const marketingCustomers = customers.filter(c => c.whatsapp_marketing);
-    
+
     const message = `⚡🔥 FLASH SALE ALERT - CROWN INN HOTEL! 🔥⚡
 
 Dear {name},
@@ -5496,12 +6371,12 @@ Crown Inn Hotel - Act fast, save big! 🏨💰`;
 // ✅ VIP & CORPORATE CAMPAIGNS
 function sendVIPOffers() {
     const vipCustomers = customers.filter(c => c.customer_type === 'VIP' && c.whatsapp_marketing);
-    
+
     if (vipCustomers.length === 0) {
         showAlert('❌ No VIP customers with marketing enabled', 'warning');
         return;
     }
-    
+
     const message = `👑 VIP EXCLUSIVE OFFER - CROWN INN HOTEL 👑
 
 Dear {name},
@@ -5533,7 +6408,7 @@ As our valued VIP customer, here's an exclusive offer just for you!
 
 function sendVIPNewsletter() {
     const vipCustomers = customers.filter(c => c.customer_type === 'VIP' && c.whatsapp_marketing);
-    
+
     const message = `📰 VIP MONTHLY NEWSLETTER - CROWN INN HOTEL
 
 Dear {name},
@@ -5569,12 +6444,12 @@ Crown Inn Hotel - Exclusively Yours! 👑`;
 
 function sendCorporateOffers() {
     const corporateCustomers = customers.filter(c => c.customer_type === 'Corporate' && c.whatsapp_marketing);
-    
+
     if (corporateCustomers.length === 0) {
         showAlert('❌ No corporate customers with marketing enabled', 'warning');
         return;
     }
-    
+
     const message = `🏢 CORPORATE PACKAGE - CROWN INN HOTEL 🏢
 
 Dear {name},
@@ -5606,7 +6481,7 @@ Exclusive corporate packages designed for your business needs!
 
 function sendMeetingRoomOffers() {
     const corporateCustomers = customers.filter(c => c.customer_type === 'Corporate' && c.whatsapp_marketing);
-    
+
     const message = `🏢 MEETING ROOM SPECIAL - CROWN INN HOTEL
 
 Dear {name},
@@ -5646,14 +6521,14 @@ function generateMarketingCustomersList(marketingCustomers) {
             <p class="text-muted">No customers have enabled WhatsApp marketing.</p>
         </div>`;
     }
-    
+
     let html = '<div class="row g-3">';
-    
+
     marketingCustomers.forEach(customer => {
         const isVIP = customer.customer_type === 'VIP';
         const bookingCount = bookings.filter(b => b.customer_id === customer.id).length;
         const isBirthday = getTodayBirthdayCustomers().find(c => c.id === customer.id);
-        
+
         html += `
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card card-sm border-${isVIP ? 'warning' : 'success'} ${isBirthday ? 'bg-warning bg-opacity-10' : ''}">
@@ -5674,9 +6549,9 @@ function generateMarketingCustomersList(marketingCustomers) {
             </div>
         `;
     });
-    
+
     html += '</div>';
-    
+
     if (marketingCustomers.length > 8) {
         html += `<div class="text-center mt-3">
             <small class="text-muted">Showing 8 of ${marketingCustomers.length} marketing customers</small>
@@ -5685,7 +6560,7 @@ function generateMarketingCustomersList(marketingCustomers) {
             </button>
         </div>`;
     }
-    
+
     return html;
 }
 
@@ -5696,24 +6571,24 @@ function sendIndividualWhatsApp(customerId) {
         showAlert('❌ Customer not found!', 'danger');
         return;
     }
-    
+
     if (!customer.whatsapp_marketing) {
         if (!confirm(`${customer.name} has not enabled WhatsApp marketing.\n\nDo you still want to send a message?`)) {
             return;
         }
     }
-    
-    const message = prompt(`📱 Send WhatsApp message to ${customer.name}:\n\n✏️ Enter your message:`, 
+
+    const message = prompt(`📱 Send WhatsApp message to ${customer.name}:\n\n✏️ Enter your message:`,
         `Hello ${customer.name},\n\nGreetings from Crown Inn Hotel!\n\nWe have exciting offers for you. Contact us for more details.\n\nBest regards,\nCrown Inn Hotel Team`);
-    
+
     if (message) {
         const whatsappNumber = customer.whatsapp || customer.phone;
         const cleanNumber = whatsappNumber.replace(/\D/g, '');
         const whatsappURL = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
-        
+
         window.open(whatsappURL, '_blank');
         showAlert(`✅ WhatsApp opened for ${customer.name}\n\nPlease send the message manually.`, 'success');
-        
+
         // Add to marketing history
         if (!customer.marketing_history) {
             customer.marketing_history = [];
@@ -5734,42 +6609,42 @@ function showMarketingStats() {
     const birthdayCustomers = getTodayBirthdayCustomers();
     const vipCustomers = customers.filter(c => c.customer_type === 'VIP' && c.whatsapp_marketing);
     const corporateCustomers = customers.filter(c => c.customer_type === 'Corporate' && c.whatsapp_marketing);
-    
+
     // Calculate campaign stats
     const customersWithHistory = customers.filter(c => c.marketing_history && c.marketing_history.length > 0);
     const totalCampaignsSent = customersWithHistory.reduce((sum, c) => sum + c.marketing_history.length, 0);
-    
+
     let stats = `📊 WHATSAPP MARKETING STATISTICS\n${new Date().toLocaleString()}\n\n`;
-    
+
     stats += `👥 CUSTOMER DATABASE:\n`;
     stats += `• Total Customers: ${customers.length}\n`;
-    stats += `• Marketing Enabled: ${marketingCustomers.length} (${Math.round((marketingCustomers.length/customers.length)*100)}%)\n`;
+    stats += `• Marketing Enabled: ${marketingCustomers.length} (${Math.round((marketingCustomers.length / customers.length) * 100)}%)\n`;
     stats += `• VIP Customers: ${vipCustomers.length}\n`;
     stats += `• Corporate Customers: ${corporateCustomers.length}\n`;
     stats += `• Regular Customers: ${marketingCustomers.filter(c => c.customer_type === 'Regular').length}\n\n`;
-    
+
     stats += `🎂 BIRTHDAY SYSTEM:\n`;
     stats += `• Today's Birthdays: ${birthdayCustomers.length}\n`;
     stats += `• Birthday Offers Enabled: ${customers.filter(c => c.birthday_offers).length}\n`;
     stats += `• Wishes Sent Today: ${birthdayCustomers.filter(c => c.birthday_wish_sent_today === new Date().toDateString()).length}\n\n`;
-    
+
     stats += `📈 CAMPAIGN PERFORMANCE:\n`;
     stats += `• Customers Reached: ${customersWithHistory.length}\n`;
     stats += `• Total Campaigns Sent: ${totalCampaignsSent}\n`;
-    stats += `• Avg Campaigns per Customer: ${customersWithHistory.length > 0 ? Math.round(totalCampaignsSent/customersWithHistory.length) : 0}\n\n`;
-    
+    stats += `• Avg Campaigns per Customer: ${customersWithHistory.length > 0 ? Math.round(totalCampaignsSent / customersWithHistory.length) : 0}\n\n`;
+
     stats += `📱 CONTACT INFO:\n`;
     stats += `• WhatsApp Numbers: ${customers.filter(c => c.whatsapp).length}\n`;
     stats += `• Marketing Consent: ${marketingCustomers.length}\n`;
     stats += `• Phone Numbers: ${customers.filter(c => c.phone).length}`;
-    
+
     alert(stats);
 }
 
 // ✅ AUTO BIRTHDAY SETUP FOR TESTING
 function setupBirthdayTestData() {
     console.log('🎂 Setting up birthday test data...');
-    
+
     // Add birthday dates to first 3 customers if they don't have them
     customers.slice(0, 3).forEach((customer, index) => {
         if (!customer.dob) {
@@ -5784,13 +6659,13 @@ function setupBirthdayTestData() {
                 const randomDay = Math.floor(Math.random() * 28) + 1;
                 customer.dob = `${today.getFullYear() - 30}-${String(randomMonth).padStart(2, '0')}-${String(randomDay).padStart(2, '0')}`;
             }
-            
+
             // Enable birthday offers and marketing
             customer.birthday_offers = true;
             customer.whatsapp_marketing = true;
         }
     });
-    
+
     saveToLocalStorage();
     const todayBirthdays = getTodayBirthdayCustomers();
     console.log(`✅ Birthday setup complete. Today's birthdays: ${todayBirthdays.length}`);
@@ -5815,15 +6690,15 @@ function getTodayBirthdayCustomers() {
     const today = new Date();
     const todayMonth = today.getMonth() + 1;
     const todayDate = today.getDate();
-    
+
     return customers.filter(customer => {
         if (!customer.dob || !customer.birthday_offers) return false;
-        
+
         try {
             const dob = new Date(customer.dob);
             const birthMonth = dob.getMonth() + 1;
             const birthDate = dob.getDate();
-            
+
             return birthMonth === todayMonth && birthDate === todayDate;
         } catch {
             return false;
@@ -5835,9 +6710,9 @@ function generateMarketingCustomersList(marketingCustomers) {
     if (marketingCustomers.length === 0) {
         return '<div class="text-center py-4"><p class="text-muted">No customers have enabled WhatsApp marketing.</p></div>';
     }
-    
+
     let html = '<div class="row g-2">';
-    
+
     marketingCustomers.slice(0, 6).forEach(customer => {
         html += `
             <div class="col-md-6 col-lg-4">
@@ -5855,24 +6730,24 @@ function generateMarketingCustomersList(marketingCustomers) {
             </div>
         `;
     });
-    
+
     html += '</div>';
-    
+
     if (marketingCustomers.length > 6) {
         html += `<div class="text-center mt-3"><small class="text-muted">Showing 6 of ${marketingCustomers.length} marketing customers</small></div>`;
     }
-    
+
     return html;
 }
 
 function sendDiscountOffer() {
     const marketingCustomers = customers.filter(c => c.whatsapp_marketing);
-    
+
     if (marketingCustomers.length === 0) {
         showAlert('No customers have WhatsApp marketing enabled', 'warning');
         return;
     }
-    
+
     const message = `🎉 Special Discount Offer from Crown Inn Hotel! 🎉
 
 Hello {name}!
@@ -5894,12 +6769,12 @@ Visit: Crown Inn Hotel
 
 function sendBirthdayWishes() {
     const birthdayCustomers = getTodayBirthdayCustomers();
-    
+
     if (birthdayCustomers.length === 0) {
         showAlert('No customer birthdays today', 'info');
         return;
     }
-    
+
     const message = `🎂 Happy Birthday {name}! 🎂
 
 Warmest birthday wishes from all of us at Crown Inn Hotel!
@@ -5919,12 +6794,12 @@ Crown Inn Hotel - Where memories are made!`;
 
 function sendVIPOffers() {
     const vipCustomers = customers.filter(c => c.customer_type === 'VIP' && c.whatsapp_marketing);
-    
+
     if (vipCustomers.length === 0) {
         showAlert('No VIP customers with marketing enabled', 'warning');
         return;
     }
-    
+
     const message = `👑 Exclusive VIP Offer - Crown Inn Hotel
 
 Dear {name},
@@ -5951,36 +6826,36 @@ function sendBulkWhatsAppMessages(customerList, messageTemplate, campaignType) {
         showAlert('No customers to send messages to', 'warning');
         return;
     }
-    
+
     if (!confirm(`📱 Send ${campaignType} to ${customerList.length} customers?\n\nThis will open WhatsApp for each customer. Make sure you have WhatsApp Web open.`)) {
         return;
     }
-    
+
     showAlert(`📱 Starting ${campaignType} campaign...\n\nOpening WhatsApp for ${customerList.length} customers.\nPlease send each message manually.`, 'info', 3000);
-    
+
     let successCount = 0;
-    
+
     customerList.forEach((customer, index) => {
         setTimeout(() => {
             try {
                 const personalizedMessage = messageTemplate
                     .replace(/{name}/g, customer.name)
                     .replace(/{hotel}/g, 'Crown Inn Hotel');
-                
+
                 const whatsappNumber = customer.whatsapp || customer.phone;
                 const cleanNumber = whatsappNumber.replace(/\D/g, '');
-                
+
                 const whatsappURL = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(personalizedMessage)}`;
-                
+
                 window.open(whatsappURL, '_blank');
                 successCount++;
-                
+
                 if (index === customerList.length - 1) {
                     setTimeout(() => {
                         showAlert(`✅ ${campaignType} Campaign Initiated!\n\n📱 Opened WhatsApp for ${successCount} customers\n\n⚠️ Please send each message manually from WhatsApp Web/App for privacy compliance.`, 'success', 10000);
                     }, 2000);
                 }
-                
+
             } catch (error) {
                 console.error(`Error opening WhatsApp for ${customer.name}:`, error);
             }
@@ -5994,15 +6869,15 @@ function sendIndividualWhatsApp(customerId) {
         showAlert('Customer not found!', 'danger');
         return;
     }
-    
-    const message = prompt(`Send WhatsApp message to ${customer.name}:\n\nEnter your message:`, 
+
+    const message = prompt(`Send WhatsApp message to ${customer.name}:\n\nEnter your message:`,
         `Hello ${customer.name},\n\nGreetings from Crown Inn Hotel!\n\nWe have exciting offers for you. Contact us for more details.\n\nBest regards,\nCrown Inn Hotel Team`);
-    
+
     if (message) {
         const whatsappNumber = customer.whatsapp || customer.phone;
         const cleanNumber = whatsappNumber.replace(/\D/g, '');
         const whatsappURL = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
-        
+
         window.open(whatsappURL, '_blank');
         showAlert(`✅ WhatsApp opened for ${customer.name}\n\nPlease send the message manually.`, 'success');
     }
@@ -6019,29 +6894,29 @@ function resetAllData() {
 }
 
 // ✅ INSTANT FIX for dropdown navigation
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Find all dropdown items and fix their navigation
     const dropdownItems = document.querySelectorAll('.dropdown-item');
-    
+
     dropdownItems.forEach(item => {
-        item.addEventListener('click', function(e) {
+        item.addEventListener('click', function (e) {
             // Get the onclick attribute
             const onclickAttr = this.getAttribute('onclick');
-            
+
             if (onclickAttr && onclickAttr.includes('showSection')) {
                 e.preventDefault();
-                
+
                 // Extract section ID
                 const match = onclickAttr.match(/showSection\(['"]([^'"]+)['"]\)/);
                 if (match && match[1]) {
                     const sectionId = match[1];
-                    
+
                     // Close dropdown
                     const dropdownMenu = this.closest('.dropdown-menu');
                     if (dropdownMenu) {
                         dropdownMenu.classList.remove('show');
                     }
-                    
+
                     // Navigate
                     setTimeout(() => {
                         showSection(sectionId);
@@ -6055,7 +6930,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Fix dropdown blue highlight and navigation issues
 function fixDropdownIssues() {
     console.log('🔄 Fixing dropdown blue highlight and navigation...');
-    
+
     // Remove duplicate sections first
     const duplicateIds = ['whatsapp-marketing', 'checkout-section'];
     duplicateIds.forEach(id => {
@@ -6064,27 +6939,27 @@ function fixDropdownIssues() {
             elements[i].remove();
         }
     });
-    
+
     // Fix all dropdown items
     document.querySelectorAll('.dropdown-item').forEach(item => {
         const newItem = item.cloneNode(true);
         item.parentNode.replaceChild(newItem, item);
-        
-        newItem.addEventListener('click', function(e) {
+
+        newItem.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            
+
             // Remove focus and active states
             this.blur();
             document.querySelectorAll('.dropdown-item.active').forEach(activeItem => {
                 activeItem.classList.remove('active');
             });
-            
+
             // Close dropdown
             document.querySelectorAll('.dropdown-menu.show').forEach(dropdown => {
                 dropdown.classList.remove('show');
             });
-            
+
             // Handle navigation
             const onclick = this.getAttribute('onclick');
             if (onclick && onclick.includes('showSection')) {
@@ -6096,8 +6971,8 @@ function fixDropdownIssues() {
                 }
             }
         });
-        
-        newItem.addEventListener('mouseleave', function() {
+
+        newItem.addEventListener('mouseleave', function () {
             this.blur();
         });
     });
@@ -6114,7 +6989,7 @@ setInterval(() => {
 }, 2000);
 
 // Initialize when page loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => {
         fixDropdownIssues();
         console.log('✅ Dropdown fixes applied!');

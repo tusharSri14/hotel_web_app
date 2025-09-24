@@ -184,6 +184,26 @@
     </style>
 </head>
 <body>
+
+    <div class="modal fade" id="customerDetailsModal" tabindex="-1" aria-labelledby="customerDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="customerDetailsModalLabel">Customer Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="customerDetailsModalBody">
+        <!-- Customer data to be inserted dynamically -->
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="editCustomerBtn" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -359,7 +379,7 @@
             <div class="col-md-2">
                 <div class="metric-card info text-center">
                     <i class="fas fa-rupee-sign fa-2x mb-2"></i>
-                    <h4>₹<span id="total-revenue">0</span></h4>
+                    <h4><span id="total-revenue">0</span></h4>
                     <small>Total Revenue</small>
                 </div>
             </div>

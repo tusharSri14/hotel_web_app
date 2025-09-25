@@ -325,40 +325,7 @@
             </div>
         </div>
 
-        <!-- WhatsApp Marketing Section -->
-<div id="whatsapp-marketing" class="content-section" style="display: none;">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h2 class="text-success">
-                            <i class="fab fa-whatsapp me-2"></i>
-                            WhatsApp Marketing
-                        </h2>
-                        <p class="text-muted">Send bulk messages, offers, and birthday wishes to your customers</p>
-                    </div>
-                    <div>
-                        <button class="btn btn-outline-danger" onclick="resetAllData()">
-                            <i class="fas fa-trash me-1"></i>Reset All Data
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- WhatsApp Marketing Content will be loaded here by JavaScript -->
-                <div id="whatsapp-marketing-content">
-                    <div class="text-center py-5">
-                        <div class="spinner-border text-success" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <p class="mt-3">Loading WhatsApp Marketing...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+      
         
         <!-- Metrics Cards -->
         <div class="row mb-4">
@@ -940,6 +907,83 @@
     
     <!-- Application JavaScript -->
     <script src="app.js"></script>
+
+    <div id="invoice-popup" style="display:none; background:#fff; color:#232323; max-width:700px; margin:0 auto; font-family:'Segoe UI', Arial, sans-serif; border:1px solid #eee; box-shadow:0 2px 8px rgba(0,0,0,0.03); padding:32px;">
+  <!-- Header with branding/logo -->
+  <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #167aff; padding-bottom:12px;">
+    <div>
+      <h2 style="margin:0; color:#167aff;">Crown Inn Hotel</h2>
+      <small style="color:#888;">Complete Management System</small>
+    </div>
+    <div>
+      <i class="fas fa-hotel" style="font-size:40px; color:#167aff;"></i>
+    </div>
+  </div>
+
+  <!-- Invoice meta -->
+  <div style="margin-top:20px;">
+    <div style="font-size:18px; font-weight:500;">#Invoice</div>
+    <table style="width:100%; margin-top:12px;">
+      <tr>
+        <td style="width:50%; padding:8px 0;">
+          <strong>Customer Name:</strong>
+          <span id="invoice-customer-name"></span>
+        </td>
+        <td style="width:50%; padding:8px 0; text-align:right;">
+          <strong>Date:</strong>
+          <span id="invoice-date"></span>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:8px 0;">
+          <strong>Booking ID:</strong>
+          <span id="invoice-booking-id"></span>
+        </td>
+        <td style="padding:8px 0; text-align:right;">
+          <strong>Status:</strong>
+          <span id="invoice-status"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Booking info -->
+  <div style="margin:18px 0 12px;">
+    <table style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr style="background:#f6f9ff;">
+          <th style="padding:10px; border:1px solid #dee2e6; text-align:left;">Room #</th>
+          <th style="padding:10px; border:1px solid #dee2e6; text-align:left;">Type</th>
+          <th style="padding:10px; border:1px solid #dee2e6; text-align:left;">Guests</th>
+          <th style="padding:10px; border:1px solid #dee2e6; text-align:left;">Check-in</th>
+          <th style="padding:10px; border:1px solid #dee2e6; text-align:left;">Check-out</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px; border:1px solid #dee2e6;"><span id="invoice-room-number"></span></td>
+          <td style="padding:10px; border:1px solid #dee2e6;"><span id="invoice-room-type"></span></td>
+          <td style="padding:10px; border:1px solid #dee2e6;"><span id="invoice-guests"></span></td>
+          <td style="padding:10px; border:1px solid #dee2e6;"><span id="invoice-checkin"></span></td>
+          <td style="padding:10px; border:1px solid #dee2e6;"><span id="invoice-checkout"></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Amount -->
+  <div style="margin-top:18px; text-align:right;">
+    <span style="font-size:18px; font-weight:600; color:#167aff;">Total Amount: ₹<span id="invoice-total"></span></span>
+  </div>
+
+  <!-- Footer/signature -->
+  <div style="margin-top:36px; border-top:1px solid #eee; padding-top:18px; display:flex; justify-content:space-between; font-size:15px; color:#888;">
+    <span>Thank you for your business!</span>
+    <span><b>Signature</b>: _____________________</span>
+  </div>
+</div>
+
+
 
     <script>
         // Initialize date time display

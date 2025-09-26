@@ -321,6 +321,7 @@ function showSection(sectionId) {
     }
 }
 
+
 // ==================== DASHBOARD ====================
 function updateDashboard() {
     try {
@@ -570,7 +571,7 @@ function loadEnhancedAddCustomerForm() {
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label fw-semibold">Age</label>
-                                            <input type="number" class="form-control" name="age" min="1" max="120" placeholder="Age">
+                                            <input type="number" id="customer-age" class="form-control" name="age" min="1" max="120" placeholder="Age" readonly>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label fw-semibold">Gender</label>
@@ -583,7 +584,7 @@ function loadEnhancedAddCustomerForm() {
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label fw-semibold">Date of Birth</label>
-                                            <input type="date" class="form-control" name="dob" max="${new Date().toISOString().split('T')[0]}">
+                                            <input type="date" id="customer-dob" class="form-control" name="dob" max="${new Date().toISOString().split('T')[0]}">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label fw-semibold">Customer Type</label>
@@ -759,6 +760,31 @@ function loadEnhancedAddCustomerForm() {
         .text-purple { color: #6f42c1 !important; }
         </style>
     `;
+
+// Utility to compute age in whole years from a DOB string (YYYY-MM-DD)
+function calculateAge(dobString) {
+  const today = new Date();
+  const dob = new Date(dobString);
+  let age = today.getFullYear() - dob.getFullYear();
+  const m = today.getMonth() - dob.getMonth();
+  // If birth month/day not yet reached this year, subtract 1
+  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+    age--;
+  }
+  return age;
+}
+
+// On DOM ready or after loading add-customer form:
+document.getElementById('customer-dob').addEventListener('change', function() {
+  const dobValue = this.value; // YYYY-MM-DD
+  if (dobValue) {
+    const age = calculateAge(dobValue);
+    document.getElementById('customer-age').value = age >= 0 ? age : '';
+  } else {
+    document.getElementById('customer-age').value = '';
+  }
+});
+
 
     ['1', '2'].forEach(num => {
         document.getElementById(`customer-id-photo${num}`).addEventListener('change', function (e) {
@@ -6796,5 +6822,3 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('✅ Dropdown fixes applied!');
     }, 1000);
 });
-
-
